@@ -2,32 +2,34 @@ import static junit.framework.Assert.assertEquals;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-
 
 public class DataLoaderTest {
 
 	private final static String RESOURCES_PATH = "PokemonData/";
 	private final static String POKEDEX_FILE_NAME = "Pokedex.csv";
 	
+	private static final Logger LOGGER = Logger.getLogger(DataLoaderTest.class);
+	
 	
 	protected DataLoader data;
 	
 	@Before
     public void doBefore() throws Exception {
-        System.out.println("doBefore Debut");
+		LOGGER.debug("doBefore Debut");
 
         File file = new File(RESOURCES_PATH + POKEDEX_FILE_NAME);
         if (file != null) 
         {
-        	System.out.println(file.getPath());
+        	LOGGER.debug(file.getPath());
         }
         data = new DataLoader();
         data.init(file);
         data.setPokeList();
 
-        System.out.println("doBefore Fin");
+        LOGGER.debug("doBefore Fin");
     }
 	
 	@Test
