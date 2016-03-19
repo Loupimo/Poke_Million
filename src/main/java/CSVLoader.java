@@ -4,6 +4,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 
 public class CSVLoader {
+	
+	public CSVLoader ()
+	{
+	}
+	
 	public File getSelectedFileWithExtension(JFileChooser fileChooser) //Ajoute l'extension du filtre sélectionné si l'utilisateur ne l'a pas spécifié
 	{
 	    File file = fileChooser.getSelectedFile();

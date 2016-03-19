@@ -27,7 +27,6 @@ public class DataLoaderTest {
         }
         data = new DataLoader();
         data.init(file);
-        data.setPokeList();
 
         LOGGER.debug("doBefore Fin");
     }
