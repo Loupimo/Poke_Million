@@ -88,7 +88,7 @@ public class MainFrame extends JFrame {
 				Component[] cp = fileChooser.getComponents();
 				vBox.add(cp[2]);
 
-				JTextArea text = new JTextArea("\n\n\nLe fichier doit avoir l'encodage \"Unicode\" et doit posséder au moins 3 champs séparés par des \";\" !!! ");
+				JTextArea text = new JTextArea("\n\n\nLe fichier doit avoir l'encodage \"Unicode\" et doit posséder 4 champs séparés par des \";\" !!! ");
 				text.setEditable(false); // Empêche la réécriture de la zone de texte
 				text.setFocusable(false); // Le texte n'est pas sélectionnable
 				text.setFont(new Font("Arial", Font.BOLD, 15));

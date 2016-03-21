@@ -3,3 +3,5 @@
 /MainFrame.class
 /MainFrame$LoadCSV.class
 /MainFrame$Pokedex.class
+/DataLoader$PokeTypeRenderer.class
+/DataLoader$ColorCellRenderer.class
