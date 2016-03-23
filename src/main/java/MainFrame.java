@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -11,14 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public MainFrame() {
-		this.setSize(new Dimension(500, 500));
+	public MainFrame() 
+	{
+		this.setSize(new Dimension(1000, 700));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -59,7 +64,12 @@ public class MainFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			CSVLoader load = new CSVLoader();
-			load.loadFile();
+			App.myCSV = load.loadFile();
+			JTable myTable = App.myCSV.printCSVFile();
+			App.mainFrame.add(myTable);
+			App.mainFrame.getContentPane().add(myTable.getTableHeader(), BorderLayout.NORTH);
+			App.mainFrame.getContentPane().add(new JScrollPane(myTable), BorderLayout.CENTER);
+			App.mainFrame.setVisible(true);
 		}
 	}
 

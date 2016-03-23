@@ -19,6 +19,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.log4j.Logger;
 
@@ -74,7 +76,6 @@ public class DataLoader {
 		}
 
 		br.close();
-		// fr.close();
 
 		return lignes;
 	}
@@ -82,13 +83,22 @@ public class DataLoader {
 	public void printDataInArray() { //Affiche la liste des pokémons de la base de donnée avec leurs caractéristiques
 		
 		JFrame f = new JFrame("Pokédex");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setPreferredSize(new Dimension(550, 422));
+		f.setPreferredSize(new Dimension(1225, 605));
 
-		String[] entetes = { "Id", "Nom", "Image", "Type" };
+		String[] entetes = { "Id", "Nom", "Image", "Type", "Faiblesse" };
 
-		DefaultTableModel model = new DefaultTableModel(null, entetes);
+		DefaultTableModel model = new DefaultTableModel(null, entetes)
+		{
+			//Permet de récupérer le type de données de la colone (exemple: pour effectuer un tri selon des entiers)
+			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@Override
+            public Class getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+			}
+		};
+		
 		// Remplit le tableau de données de façon dynamique
 		for (Pokemon count : this.listePoke) {
 			Vector<Object> donnees = new Vector<Object>();
@@ -96,21 +106,33 @@ public class DataLoader {
 			donnees.add(count.getName());
 			donnees.add(count.getSprite());
 			donnees.add(count.getTypeList());
+			donnees.add(count.getWeeknessList());
 			model.addRow(donnees);
 		}
 
 		JTable tableau = new JTable(model);
+		tableau.setEnabled(false); //Empêche la sélection des cellules
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tableau.getModel());
+		sorter.setSortable(2, false); //Empêche de trier par rapport à la colone "Image"
+		tableau.setRowSorter(sorter);
 		tableau.setFont(new Font("Lucida", 0, 15));
-
-		tableau.getColumnModel().getColumn(3).setCellRenderer(new PokeTypeRenderer());
-		tableau.getColumnModel().getColumn(2).setCellRenderer(new ColorCellRenderer());
-		tableau.getColumnModel().getColumn(1).setCellRenderer(new ColorCellRenderer());
-		tableau.getColumnModel().getColumn(0).setCellRenderer(new ColorCellRenderer());
 		
+		//Définition du style d'affichage de chaque colone
+		tableau.getColumnModel().getColumn(0).setCellRenderer(new ColorCellRenderer());
+		tableau.getColumnModel().getColumn(1).setCellRenderer(new ColorCellRenderer());
+		tableau.getColumnModel().getColumn(2).setCellRenderer(new ColorCellRenderer());
+		tableau.getColumnModel().getColumn(3).setCellRenderer(new PokeTypeRenderer());
+		tableau.getColumnModel().getColumn(4).setCellRenderer(new PokeTypeRenderer());
+
+		//Définition de la hauteur et de la largeur de chaque ligne/colone
 		tableau.getColumnModel().getColumn(0).setMaxWidth(60);
-		tableau.getColumnModel().getColumn(1).setPreferredWidth(120);
-		tableau.getColumnModel().getColumn(2).setPreferredWidth(60);
+		tableau.getColumnModel().getColumn(1).setPreferredWidth(150);
+		tableau.getColumnModel().getColumn(1).setMaxWidth(150);
+		tableau.getColumnModel().getColumn(2).setMaxWidth(60);
+		tableau.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tableau.getColumnModel().getColumn(4).setPreferredWidth(120);
 		tableau.setRowHeight(60);
+		
 		tableau.setModel(model);
 		f.getContentPane().add(tableau.getTableHeader(), BorderLayout.NORTH);
 		f.getContentPane().add(new JScrollPane(tableau), BorderLayout.CENTER);
@@ -134,31 +156,45 @@ public class DataLoader {
 		}
 	}
 
-	private void setPokeList() throws Exception {
-		if (this.data != null) {
+	private void setPokeList() throws Exception 
+	{ //Initialise la base de donnée de pokémon
+		if (this.data != null) 
+		{
 			this.lignes = getLignesFromFile();
 			this.lignes.remove(0);
 			String separator = ";";
 
-			for (String ligne : this.lignes) {
+			for (String ligne : this.lignes) 
+			{
 				String[] values = ligne.split(separator);
+				
+				//Colone des types
 				LinkedList<String> typeList = new LinkedList<String>();
 				String[] tempType = values[3].split(",");
 				for (String type : tempType) {
 					typeList.add(type);
 				}
-				this.listePoke.add(new Pokemon(Integer.parseInt(values[0]), values[1], values[2], typeList));
+				
+				//Colone des faiblesses
+				LinkedList<String> weeknessList = new LinkedList<String>();
+				String[] tempWeekness = values[4].split(",");
+				for (String weekness : tempWeekness) 
+				{
+					weeknessList.add(weekness);
+				}
+				this.listePoke.add(new Pokemon(Integer.parseInt(values[0]), values[1], values[2], typeList, weeknessList));
 			}
 		}
 	}
 
 	public void changePokeList(File file)
-	{
+	{ //Charge une nouvelle base de donnée de pokémon à partir d'un fichier CSV
 		this.listePoke.clear();
 		this.init(file);
 		
 	}
-	public LinkedList<Pokemon> getPokelist() {
+	public LinkedList<Pokemon> getPokelist() 
+	{
 		return this.listePoke;
 	}
 
@@ -166,8 +202,9 @@ public class DataLoader {
 	// ################ Private Class #################
 	// ################################################
 
-	public class PokeTypeRenderer extends DefaultTableCellRenderer {
-
+	public class PokeTypeRenderer extends DefaultTableCellRenderer 
+	{ //Renderer pour les colones de type "Type" et "Fablaisse", on définit la couleur en fonction de la première valeur
+	  //de chaque liste, de plus comme il s'agit de liste on enlève les "[...]"
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -213,7 +250,8 @@ public class DataLoader {
 		}
 	}
 	
-	public class ColorCellRenderer extends DefaultTableCellRenderer {
+	public class ColorCellRenderer extends DefaultTableCellRenderer
+	{ //Colorie toutes les colones (excepté "Type" et "Faiblesse") en fonction de la première valeur du "Type"
 
 		private static final long serialVersionUID = 1L;
 
@@ -247,7 +285,7 @@ public class DataLoader {
 	        else if (type.get(0).equals("Eau")) this.setBackground(new Color (0, 100, 250));
 	        else if (type.get(0).equals("Electrik")) this.setBackground(new Color (255, 240, 75));
 	        
-	        //Fait apparaître l'image s'il s'agit de la colone des image
+	        //Fait apparaître l'image s'il s'agit de la colone des images
 	        if(table.getColumnName(column).equals("Image")) 
         	{
 	        	this.setText(null);

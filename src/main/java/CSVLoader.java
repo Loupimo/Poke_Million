@@ -59,7 +59,7 @@ public class CSVLoader {
 		}
 	}
 	
-	public void loadFile() //Fonction de chargement
+	public CSVFile loadFile() //Fonction de chargement
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		
@@ -72,17 +72,11 @@ public class CSVLoader {
 		{
 		    File fileToLoad = getSelectedFileWithExtension(fileChooser); //On récupère le nom du fichier
 		    System.out.println("Loaded file: " + fileToLoad.getName());
-		    
-			try 
-			{
-				BufferedReader br = new BufferedReader (new FileReader (fileToLoad)); //On utilise un buffer pour lire dans le fichier
-				 // do something
-		    	br.close(); //ferme le buffer et libère donc l'accès au fichier
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			}			    	
+		   
+			CSVFile myCSV = new CSVFile ();
+			myCSV.init(fileToLoad);
+			return myCSV;
 		}
+		return null;
 	}
 }

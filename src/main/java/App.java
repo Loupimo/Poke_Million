@@ -7,7 +7,9 @@ public class App {
 	protected static String[] suffixes = { "csv" };
 	protected static String[] descriptions = { "Fichiers CSV (.csv)" };
 	public static DataLoader data;
+	public static CSVFile myCSV;
 	public static CSVFilter filtre = new CSVFilter(suffixes, descriptions);
+	public static MainFrame mainFrame;
 
 	public static void main(String[] args) {
 		
@@ -31,7 +33,7 @@ public class App {
 		data = new DataLoader ();
 		data.init(new File ("PokemonData/Pokedex.csv"));
 		
-		new MainFrame();
+		mainFrame = new MainFrame();
 		
 	}
 
