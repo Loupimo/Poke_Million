@@ -80,7 +80,7 @@ public class CSVFile
 		{
 			for (j = 0; j < list.size(); j++)
 			{
-				LOGGER.debug ("i = " + i + ", j = " + j + ", value = " + this.getValueOfAList(list, j));
+				//LOGGER.error ("i = " + i + ", j = " + j + ", value = " + this.getValueOfAList(list, j));
 				myTable.setValueAt(this.getValueOfAList(list, j), j, i);
 			}
 			i++;
@@ -97,6 +97,7 @@ public class CSVFile
 	@SuppressWarnings("unchecked")
 	public void init (File p_csvFile)
 	{ //Récupère certains champs du fichier CSV placé en paramètre afin de créer la base de donnée pour le combat
+		if (this.csvFile != null) this.clearOldCSV ();
 		this.csvFile = p_csvFile;
 		try {
 			List<String> lignes = this.getLignesFromFile();
@@ -215,6 +216,14 @@ public class CSVFile
 		return lignes;
 	}
 	
+	private void clearOldCSV ()
+	{
+		LOGGER.debug ("clearALL");
+		this.memAllList.clear();
+		App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JTable"));
+		App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JScrollPane"));
+	}
+	
 	// ################################################
 	// ################### Getters ####################
 	// ################################################
@@ -264,5 +273,4 @@ public class CSVFile
 	{
 		return this.entetes;
 	}
-	
 }

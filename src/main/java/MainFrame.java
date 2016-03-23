@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -119,5 +120,27 @@ public class MainFrame extends JFrame {
 				}
 			}
 		}
+	}
+	
+	// ################################################
+	// ################### Getters ####################
+	// ################################################
+	
+	public Component findComponentByName(Container container, String componentName) 
+	{
+		for (Component component: container.getComponents()) 
+		{
+			System.out.println(component.getClass().getName());
+			if (componentName.equals(component.getClass().getName())) 
+			{
+		      return component;
+		    }
+		    if (component instanceof Container) 
+		    {
+		      Container newContainer = (Container)component;
+		      return findComponentByName(newContainer, componentName);
+		    }
+		}
+		return null;
 	}
 }

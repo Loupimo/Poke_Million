@@ -73,9 +73,9 @@ public class CSVLoader {
 		    File fileToLoad = getSelectedFileWithExtension(fileChooser); //On récupère le nom du fichier
 		    System.out.println("Loaded file: " + fileToLoad.getName());
 		   
-			CSVFile myCSV = new CSVFile ();
-			myCSV.init(fileToLoad);
-			return myCSV;
+			if (App.myCSV == null) App.myCSV = new CSVFile ();
+			App.myCSV.init(fileToLoad);
+			return App.myCSV;
 		}
 		return null;
 	}
