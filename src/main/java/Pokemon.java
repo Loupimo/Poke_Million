@@ -52,7 +52,8 @@ public class Pokemon {
 		this.sprite = poke.getSprite();
 		this.typeList = new LinkedList<String> (poke.getTypeList());
 		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());
-		this.speed = 10;
+		this.speed = (int) App.myCSV.getValueOfAList(1,0);
+		LOGGER.error(speed);
 		this.defense = 25;
 	}
 	

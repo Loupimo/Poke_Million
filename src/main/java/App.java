@@ -30,6 +30,10 @@ public class App {
 		data.init(new File ("PokemonData/Pokedex.csv"));
 		
 		mainFrame = new MainFrame();
+		myCSV= new CSVFile();
+		myCSV.init(new File("PokemonData/euromillions_3.csv"));
+		new Pokemon(data.getPokelist().get(1));
+	
 		
 	}
 
