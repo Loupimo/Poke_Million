@@ -1,4 +1,8 @@
+import java.awt.List;
 import java.io.File;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -32,6 +36,24 @@ public class App {
 		mainFrame = new MainFrame();
 		myCSV= new CSVFile();
 		myCSV.init(new File("PokemonData/euromillions_3.csv"));
+		
+		//***************************** TESTER QUE TOUTES LES VALEUR SONT POSSIBLE (0-150)
+		LinkedList<?> tata = myCSV.getListByIndex(0);
+		
+		int valeur=0;
+		ListIterator<Integer> ITata = (ListIterator<Integer>) tata.listIterator();
+		
+		while (ITata.hasNext())
+		{
+			valeur = ITata.next()%151;
+			ITata.set(valeur);
+			System.out.println(""+valeur);
+		}
+		//********************************************/
+		
+		
+		
+		LinkedList<Integer>toto = new LinkedList<Integer>((Collection<? extends Integer>) myCSV.getListByIndex(0));
 		new Pokemon(data.getPokelist().get(1));
 	
 		
