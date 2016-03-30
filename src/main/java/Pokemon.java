@@ -50,7 +50,8 @@ public class Pokemon {
 		this.name = poke.getName();
 		this.sprite = poke.getSprite();
 		this.typeList = new LinkedList<String> (poke.getTypeList());
-		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());	
+		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());
+		this.speed = 10;
 	}
 	
 	// ################################################
