@@ -18,6 +18,7 @@ public class Pokemon {
 	private LinkedList<String> weeknessList;
 	private int healthPoint;
 	private int attack;
+	private int speed;
 
 	// ################################################
 	// ############### Constructeurs ##################
