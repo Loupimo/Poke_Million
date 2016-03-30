@@ -53,6 +53,7 @@ public class Pokemon {
 		this.typeList = new LinkedList<String> (poke.getTypeList());
 		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());
 		this.speed = 10;
+		this.defense = 2;
 	}
 	
 	// ################################################
