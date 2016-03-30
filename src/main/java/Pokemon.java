@@ -19,6 +19,7 @@ public class Pokemon {
 	private int healthPoint;
 	private int attack;
 	private int speed;
+	private int defense;
 
 	// ################################################
 	// ############### Constructeurs ##################
