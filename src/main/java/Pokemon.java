@@ -52,9 +52,7 @@ public class Pokemon {
 		this.sprite = poke.getSprite();
 		this.typeList = new LinkedList<String> (poke.getTypeList());
 		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());
-		this.speed = (int) App.myCSV.getValueOfAList(1,0);
-		LOGGER.error(speed);
-		this.defense = 25;
+
 	}
 	
 	// ################################################
@@ -115,6 +113,15 @@ public class Pokemon {
 	{
 		return this.attack;
 	}
+	public int getDefense ()
+	{
+		return this.defense;
+	}
+	
+	public int getSpeed ()
+	{
+		return this.speed;
+	}
 	
 	// ################################################
 	// ################### Setters ####################
@@ -128,5 +135,12 @@ public class Pokemon {
 	public void setAttack (int p_Attack)
 	{
 		this.attack = p_Attack;
+	}
+	public void setCaract(int attack,int defense,int speed,int HP)
+	{
+		this.speed = speed;
+		this.defense = defense;
+		this.attack=attack;
+		this.healthPoint=HP;
 	}
 }

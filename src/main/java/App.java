@@ -1,6 +1,4 @@
-import java.awt.List;
 import java.io.File;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -37,6 +35,8 @@ public class App {
 		myCSV= new CSVFile();
 		myCSV.init(new File("PokemonData/euromillions_3.csv"));
 		
+		
+		/*
 		//***************************** TESTER QUE TOUTES LES VALEUR SONT POSSIBLE (0-150)
 		LinkedList<?> tata = myCSV.getListByIndex(0);
 		
@@ -53,8 +53,9 @@ public class App {
 		
 		
 		
-		LinkedList<Integer>toto = new LinkedList<Integer>((Collection<? extends Integer>) myCSV.getListByIndex(0));
-		new Pokemon(data.getPokelist().get(1));
+		Pokemon premier = new Pokemon(data.getPokelist().get(1));
+		Dresseur sacha = new Dresseur ("sacha");
+		sacha.InfoEquipe();
 	
 		
 	}
