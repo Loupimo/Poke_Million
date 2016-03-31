@@ -15,6 +15,7 @@ public class App {
 		
 		try {
 			//Définit le style de la fenêtre de sélection avec celui du system
+			//
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
