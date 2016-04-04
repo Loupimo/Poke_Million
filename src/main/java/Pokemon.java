@@ -17,6 +17,7 @@ public class Pokemon {
 	private LinkedList<String> typeList;
 	private LinkedList<String> weeknessList;
 	private int healthPoint;
+	private int currentHP;
 	private int attack;
 	private int speed;
 	private int defense;
@@ -142,5 +143,10 @@ public class Pokemon {
 		this.defense = defense;
 		this.attack=attack;
 		this.healthPoint=HP;
+		this.currentHP = HP;
+	}
+
+	public void takeDamage(int attack) {
+		this.healthPoint -= attack;
 	}
 }

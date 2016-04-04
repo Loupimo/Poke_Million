@@ -25,13 +25,26 @@ public class Dresseur {
 		getRandomEquipe(4);
 	}
 	
+	
+	/***********CONSTRUCTEUR PERSO TAB[](NUMERO,ATTACK,DEFENSE,SPEED,HP)************/
+	public Dresseur (String nom,int size,int tab[][])
+	{
+		LOGGER.debug("Constructeur Dresseur");
+		equipe = new LinkedList<Pokemon>();
+		this.nom=nom;
+		getEquipe(size,tab);
+	}
+	
 	public  LinkedList<Pokemon> GetEquipe()
 	{
 		LOGGER.debug("GetEquipe");
 		return equipe;
 	}
+	
+	
 	private void getRandomEquipe(int size) throws IllegalArgumentException
 	{
+		LOGGER.debug("getRandaomEquipe");
 		if (size <6 && size >0)
 		{
 			int i;
@@ -43,7 +56,23 @@ public class Dresseur {
 		}
 		throw new IllegalArgumentException("taille trop grande");
 	}
+	
+	private void getEquipe(int size, int[][]tab) throws IllegalArgumentException
+	{
+		LOGGER.debug("getEquipe");
+		if (size <6 && size >0)
+		{
+			int i;
+			for (i=0;i<size;i++)
+			{
+				equipe.add(GetPokemon(tab[i][0],tab[i][1],tab[i][2],tab[i][3],tab[i][4]));
+			}
+			return;
+		}
+		throw new IllegalArgumentException("taille trop grande");
+	}
 
+	
 	private Pokemon GetRandomPokemon() {
 		List<Integer> randomIndex= new ArrayList<>();
 		for(int i = 0; i<222;i++)
@@ -70,11 +99,24 @@ public class Dresseur {
 		result.setCaract(attack, 10, speed, HP);
 		return result;
 	}
+	
+	
+	private Pokemon GetPokemon(int num,int HP,int attack,int speed,int defense) throws IllegalArgumentException
+	{
+		if(num>-1&&num<151)
+		{
+		Pokemon result = new Pokemon(App.data.getPokelist().get(num));
+		
+		result.setCaract(attack, defense, speed, HP);
+		return result;
+		}
+		throw new IllegalArgumentException ("mauvais ID");
+	}
 
 	public void InfoEquipe()
 	{
 		int size = equipe.size();
-		System.out.println("EQUIPE DRESSEUR "+nom+"\nNombre de POKEMON :"+size);
+		System.out.println("\nEQUIPE DRESSEUR "+nom+"\nNombre de POKEMON :"+size);
 		for (int i =0; i <size;i++)
 		{
 			System.out.printf("===============Pokemon n°"+(i+1)+"===============");
@@ -83,5 +125,26 @@ public class Dresseur {
 	}
 
 
+	public boolean hasPokemon() {
+		return !equipe.isEmpty();
+	}
 
+
+	public Pokemon getFirstPokemon() throws IndexOutOfBoundsException {
+		if(equipe.isEmpty())
+		{
+			throw new IndexOutOfBoundsException("plus de pokemon");
+		}
+		return equipe.getFirst();
+	}
+
+
+	public void deleteFirst() {
+		equipe.poll();
+	}
+
+	public String getName()
+	{
+		return this.nom;
+	}
 }

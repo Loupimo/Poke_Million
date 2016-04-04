@@ -53,10 +53,33 @@ public class App {
 		
 		
 		
-		Pokemon premier = new Pokemon(data.getPokelist().get(1));
-		Dresseur sacha = new Dresseur ("sacha");
+		//Pokemon premier = new Pokemon(data.getPokelist().get(1));
+		/************generation aleatoire************/
+		/*Dresseur sacha = new Dresseur ("sacha");
 		sacha.InfoEquipe();
-	
+		
+		/**************génération sélectionné-***********/
+		/*int tab[][]={{0,10,10,10,10},{150,15,32,15,2}};
+		Dresseur regis = new Dresseur("regis",2,tab);
+		regis.InfoEquipe();
+		
+		*/
+		TourDeCombat ligue = new TourDeCombat("sacha");
+		ligue.infoJoueur();
+		ligue.infoEnnemi();
+		if(ligue.combat())
+		{
+			System.out.println("BRAVO TU AS GAGNE");
+
+			ligue.infoJoueur();
+		}
+		else
+		{
+			System.out.println("PERDU");
+
+			ligue.infoJoueur();
+		}
+			
 		
 	}
 
