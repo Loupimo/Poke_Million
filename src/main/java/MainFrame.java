@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
@@ -23,9 +24,9 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() 
 	{
-		this.setSize(new Dimension(1000, 700));
+		//this.setSize(new Dimension(1000, 700));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menu1 = new JMenu("Fichier");
@@ -48,8 +49,17 @@ public class MainFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		
+		//this.setLayout(new FlowLayout());
 	}
 
+	
+	public void addMenu(){
+		this.add(new Menu());
+	}
+	
+	
+	
 	// ################################################
 	// ################ Private Class #################
 	// ################################################
