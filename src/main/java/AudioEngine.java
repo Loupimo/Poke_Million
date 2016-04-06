@@ -24,8 +24,10 @@ public class AudioEngine extends Thread{
 			input = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile()); //On récupère le fichier
 			clip = AudioSystem.getClip();
 			clip.open(input); //On ouvre le fichier
+			System.out.println("Clip opened :" + name);
 			length = clip.getMicrosecondLength(); //On lit la durée de lecture du fichier
 			clip.start(); //On lance le .wav
+			System.out.println("Clip started :" + length);
 			Thread.sleep(length/1000); //On arrête ce thread le temps que le .wav soit fini
 			
 			clip.stop();
@@ -34,5 +36,10 @@ public class AudioEngine extends Thread{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public void stopMusic(){
+		this.clip.stop();
+		this.stop();
 	}
 }

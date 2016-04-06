@@ -22,7 +22,6 @@ public class CustomButton extends JButton{
 		try {
 			this.img = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Erreur chargement img");
 			e.printStackTrace();
 		}
@@ -33,7 +32,6 @@ public class CustomButton extends JButton{
 	
 
 	public void paintComponent(Graphics g){
-		//if (img == null) return;
 	    g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 	    repaint();
 	}

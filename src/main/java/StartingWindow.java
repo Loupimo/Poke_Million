@@ -37,11 +37,9 @@ public class StartingWindow extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
-		/*controler.changeFlag();
-		System.out.println("Thread killed");*/
 		
 		if (e.getSource() == play){
-			//TODO : ouvrir le menu principal
+			//Coupe la musique et ouvre le menu
 			IntroFrame parent = (IntroFrame) SwingUtilities.getWindowAncestor(this);
 			controler.stopMusic();
 			controler.stop();

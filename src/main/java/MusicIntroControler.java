@@ -16,8 +16,7 @@ public class MusicIntroControler extends Thread{
 			}
 			
 		}
-		System.out.println("opening stopped");
-		//flag = true;
+		
 		opening = new AudioEngine("opening2.wav");
 		opening.start();
 		
