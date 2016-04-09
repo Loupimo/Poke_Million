@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+
 public class Menu extends JPanel implements ActionListener{
 	private BufferedImage img; //Image de fond
 	private CustomButton play, tuto, quitter;
@@ -51,7 +52,7 @@ public class Menu extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		
 		if (e.getSource() == play){
-			//TODO : ouvrir la fenêtre de jeu	
+			new Combat(true);
 			System.out.println("Lancement du jeu");
 		}
 		else if (e.getSource() == tuto){
