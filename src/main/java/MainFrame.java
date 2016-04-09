@@ -46,6 +46,11 @@ public class MainFrame extends JFrame {
 		menu2.add(changePokedex);
 		menuBar.add(menu2);
 
+		JMenu menu3 = new JMenu("Combat");
+		JMenuItem lancerCombat = new JMenuItem(new Combat());
+		menu3.add(lancerCombat);
+		menuBar.add(menu3);
+		
 		this.setJMenuBar(menuBar);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -64,6 +69,20 @@ public class MainFrame extends JFrame {
 	// ################ Private Class #################
 	// ################################################
 
+	private static class Combat extends AbstractAction {
+		
+		private static final long serialVersionUID = 1L;
+
+		private Combat() {
+			super("Lancer le combat");
+		}
+
+		public void actionPerformed(ActionEvent e) {
+
+			new Combat();
+		}
+	}
+	
 	private static class LoadCSV extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
