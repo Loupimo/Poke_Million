@@ -90,6 +90,18 @@ public class TourDeCombat {
 				
 			}
 		}
+		
+		if (J1.hasPokemon())
+		{
+			///////////////////////////////////// joueur 1 gagne soin des pokemon
+			J1.soin();
+			
+		}
+		else 
+		{
+			//////////////////////////////////// joueur 1 perd
+			
+		}
 		}catch (IndexOutOfBoundsException e)
 		{
 			e.printStackTrace();

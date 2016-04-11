@@ -163,4 +163,12 @@ public class Dresseur {
 	{
 		return this.nom;
 	}
+
+	public void soin() {
+		for (Pokemon curr : equipe)
+		{
+			curr.resetHP();
+		}
+		
+	}
 }

@@ -149,4 +149,9 @@ public class Pokemon {
 	public void takeDamage(int attack) {
 		this.healthPoint -= attack;
 	}
+
+	public void resetHP() {
+		this.healthPoint = this .currentHP;
+		
+	}
 }
