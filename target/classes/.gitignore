@@ -9,7 +9,12 @@
 /DataLoader$PokeTypeRenderer.class
 /DataLoader.class
 /DataLoaderTest.class
-/PokemonTest.class
 /Dresseur.class
-/Pokedex.csv
+/MainFrame$LoadCSV.class
+/MainFrame$Pokedex.class
+/MainFrame.class
+/Pokemon.class
+/PokemonTest.class
+/log4j.properties
 /TourDeCombat.class
+/CopyOfTourDeCombat.class

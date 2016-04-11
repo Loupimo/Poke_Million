@@ -22,7 +22,14 @@ public class Dresseur {
 		LOGGER.debug("Constructeur Dresseur");
 		equipe = new LinkedList<Pokemon>();
 		this.nom=nom;
-		getRandomEquipe(4);
+	}
+	
+	public Dresseur (String nom,int n)
+	{
+		LOGGER.debug("Constructeur Dresseur");
+		equipe = new LinkedList<Pokemon>();
+		equipe = getRandomEquipe(n);
+		this.nom=nom;
 	}
 	
 	
@@ -42,17 +49,18 @@ public class Dresseur {
 	}
 	
 	
-	private void getRandomEquipe(int size) throws IllegalArgumentException
+	public LinkedList<Pokemon> getRandomEquipe(int size) throws IllegalArgumentException
 	{
 		LOGGER.debug("getRandaomEquipe");
+		LinkedList<Pokemon> result = new LinkedList<Pokemon>();
 		if (size <6 && size >0)
 		{
 			int i;
 			for (i=0;i<size;i++)
 			{
-				equipe.add(GetRandomPokemon());
+				result.add(GetRandomPokemon());
 			}
-			return;
+			return result;
 		}
 		throw new IllegalArgumentException("taille trop grande");
 	}
@@ -126,16 +134,24 @@ public class Dresseur {
 
 
 	public boolean hasPokemon() {
-		return !equipe.isEmpty();
+		boolean result = false;
+		for (Pokemon curr : equipe)
+		{
+			if (curr.getHealthPoint() > 0)
+			{
+				return true;
+			}
+		}
+		return result;
 	}
 
 
-	public Pokemon getFirstPokemon() throws IndexOutOfBoundsException {
+	public Pokemon getPokemon(int id) throws IndexOutOfBoundsException {
 		if(equipe.isEmpty())
 		{
 			throw new IndexOutOfBoundsException("plus de pokemon");
 		}
-		return equipe.getFirst();
+		return equipe.get(id);
 	}
 
 

@@ -65,20 +65,8 @@ public class App {
 		
 		*/
 		TourDeCombat ligue = new TourDeCombat("sacha");
-		ligue.infoJoueur();
-		ligue.infoEnnemi();
-		if(ligue.combat())
-		{
-			System.out.println("BRAVO TU AS GAGNE");
-
-			ligue.infoJoueur();
-		}
-		else
-		{
-			System.out.println("PERDU");
-
-			ligue.infoJoueur();
-		}
+		
+		
 			
 		
 	}
