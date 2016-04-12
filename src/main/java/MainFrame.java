@@ -21,7 +21,9 @@ import javax.swing.JTextArea;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	
+	
 	public MainFrame() 
 	{
 		//this.setSize(new Dimension(1000, 700));
@@ -45,7 +47,7 @@ public class MainFrame extends JFrame {
 		JMenuItem changePokedex = new JMenuItem(new Pokedex("Changer de Pokédex"));
 		menu2.add(changePokedex);
 		menuBar.add(menu2);
-
+		
 		this.setJMenuBar(menuBar);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -64,6 +66,7 @@ public class MainFrame extends JFrame {
 	// ################ Private Class #################
 	// ################################################
 
+	
 	private static class LoadCSV extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;

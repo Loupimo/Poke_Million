@@ -16,18 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+
 public class Menu extends JPanel implements ActionListener{
 	private BufferedImage img; //Image de fond
 	private CustomButton play, tuto, quitter, options;
-	private Settings set = new Settings();
-	private int rows, cols;
 	private AudioEngine musique;
-	private JLabel txtJouer, txtQuitter, txtAide, txtOptions;
 	
 	public Menu(){
 		super();
-		this.rows = 3;
-		this.cols = 6;
 		try {
 			img = ImageIO.read(new File("./src/Images/fond2.png"));
 		} catch (IOException e) {
@@ -91,7 +87,11 @@ public class Menu extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		
 		if (e.getSource() == play){
-			//TODO : ouvrir la fenêtre de jeu	
+			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			parent.getContentPane().remove(this);
+			parent.getContentPane().add(new Combat(true));
+			parent.getContentPane().invalidate();
+			parent.getContentPane().validate();
 			System.out.println("Lancement du jeu");
 		}
 		else if (e.getSource() == tuto){

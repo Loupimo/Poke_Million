@@ -16,11 +16,6 @@ public class App {
 	public static void main(String[] args) {
 		
 		
-		
-		/*Thread t = new Thread(new AudioEngine("/Music/opening1"));
-		t.start();
-		//audio1 = new AudioEngine("/Music/opening1");*/
-		
 		try {
 			//Définit le style de la fenêtre de sélection avec celui du system
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
