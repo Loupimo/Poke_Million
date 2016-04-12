@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -12,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class MainFrame extends JFrame {
@@ -24,18 +21,20 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() 
 	{
+		super ("Poké Million");
 		//this.setSize(new Dimension(1000, 700));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menu1 = new JMenu("Fichier");
-		JMenuItem ouvrir = new JMenuItem(new LoadCSV());
+		JMenuItem ouvrir = new JMenuItem(new CSV("Charger un CSV"));
+		JMenuItem afficher = new JMenuItem(new CSV("Afficher un CSV"));
 		// JMenuItem sauver = new JMenuItem(new SaveCSV("Sauver"));
 		// JMenuItem quitter = new JMenuItem(new QuitterAction("Quitter"));
 		menu1.add(ouvrir);
 		// menu1.add(sauver);
-		menu1.addSeparator();
+		menu1.add(afficher);
 		// menu1.add(quitter);
 		menuBar.add(menu1);
 
@@ -65,23 +64,32 @@ public class MainFrame extends JFrame {
 	// ################################################
 
 	
-	private static class LoadCSV extends AbstractAction {
+	private static class CSV extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
-
-		private LoadCSV() {
-			super("Ouvrir");
+		private String action;
+		
+		private CSV(String actionName) {
+			super(actionName);
+			this.action = actionName;
 		}
 
-		public void actionPerformed(ActionEvent e) {
-
-			CSVLoader load = new CSVLoader();
-			App.myCSV = load.loadFile();
-			JTable myTable = App.myCSV.printCSVFile();
-			App.mainFrame.add(myTable);
-			App.mainFrame.getContentPane().add(myTable.getTableHeader(), BorderLayout.NORTH);
-			App.mainFrame.getContentPane().add(new JScrollPane(myTable), BorderLayout.CENTER);
-			App.mainFrame.setVisible(true);
+		public void actionPerformed(ActionEvent e) 
+		{
+			if (this.action.equals("Charger un CSV")) 
+			{ //Propose de charger un CSV
+				CSVLoader load = new CSVLoader();
+				App.myCSV = load.loadFile();
+			}
+			else
+			{ //Affiche Le contenu du CSV
+				if (App.myCSV == null)
+				{ //Propose de charger un CSV si aucun n'a été chargé auparavant
+					CSVLoader load = new CSVLoader();
+					App.myCSV = load.loadFile();
+				}
+				if (App.myCSV != null) App.myCSV.printCSV(); //Affiche le CSV
+			}
 		}
 	}
 

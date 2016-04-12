@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,6 +9,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Vector;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -22,7 +26,7 @@ public class CSVFile
 	// ################################################
 	
 	private LinkedList<LinkedList<?>> memAllList;
-	private File csvFile;
+	private File csvFile = null;
 	private LinkedList<String> entetes;
 	private static final Logger LOGGER = Logger.getLogger(CSVFileTest.class);
 	
@@ -220,9 +224,21 @@ public class CSVFile
 	{
 		LOGGER.debug ("clearALL");
 		this.memAllList.clear();
-		/*App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JTable"));
-		App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JScrollPane"));
-	*/}
+	}
+	
+	public void printCSV ()
+	{
+		JFrame CSVWindow = new JFrame ("Votre CVS");
+	
+		JTable myTable = App.myCSV.printCSVFile();
+		if (myTable == null) return;
+		CSVWindow.add(myTable);
+		CSVWindow.getContentPane().add(myTable.getTableHeader(), BorderLayout.NORTH);
+		CSVWindow.getContentPane().add(new JScrollPane(myTable), BorderLayout.CENTER);
+		CSVWindow.setVisible(true);
+		CSVWindow.setSize(new Dimension(1000, 700));
+  		CSVWindow.setLocationRelativeTo(null);
+	}
 	
 	// ################################################
 	// ################### Getters ####################

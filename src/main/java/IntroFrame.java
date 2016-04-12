@@ -8,6 +8,7 @@ public class IntroFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	public IntroFrame(){
+		super ("Poké Million");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setVisible(true);

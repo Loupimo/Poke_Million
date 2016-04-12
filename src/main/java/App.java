@@ -36,9 +36,8 @@ public class App {
 		introFrame = new IntroFrame();
 		introFrame.animationIntro();
 		
-		//mainFrame = new MainFrame();
-		myCSV= new CSVFile();
-		myCSV.init(new File("PokemonData/euromillions_3.csv"));
+		/*myCSV = new CSVFile();
+		myCSV.init(new File("PokemonData/euromillions_3.csv"));*/
 		
 		
 		/*
@@ -71,11 +70,5 @@ public class App {
 		*/
 		//TourDeCombat ligue = new TourDeCombat("sacha");
 		
-		
-		//mainFrame = new MainFrame();
-		//mainFrame.animationIntro();
-		
 	}
-
-	
 }
