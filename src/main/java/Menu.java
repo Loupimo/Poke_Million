@@ -34,8 +34,8 @@ public class Menu extends JPanel implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		this.play = new CustomButton("./src/Images/BoutonPokeballJouer.png", 120, 120);
-		this.tuto = new CustomButton("./src/Images/BoutonSuperballOption.png", 120, 120);
-		this.options = new CustomButton("./src/Images/BoutonHyperballAide.png", 120, 120);
+		this.options = new CustomButton("./src/Images/BoutonSuperballOption.png", 120, 120);
+		this.tuto = new CustomButton("./src/Images/BoutonHyperballAide.png", 120, 120);
 		this.quitter = new CustomButton("./src/Images/BoutonMasterballQuitter.png", 120, 120);
 		play.addActionListener(this);
 		tuto.addActionListener(this);
@@ -61,12 +61,12 @@ public class Menu extends JPanel implements ActionListener{
 		//Positionnement du bouton tuto
 		c.gridx = 1;
 		c.gridy = 0;
-		this.add(tuto, c);
+		this.add(options, c);
 		
 		//Positionnement du bouton options
 		c.gridx = 2;
 		c.gridy = 0;
-		this.add(options, c);
+		this.add(tuto, c);
 		
 		//Positionnement du bouton quitter
 		c.gridx = 3;
@@ -75,7 +75,7 @@ public class Menu extends JPanel implements ActionListener{
 		
 		
 		
-		this.musique = new AudioEngine("Pokecenter.wav");
+		this.musique = new AudioEngine("Menu.wav");
 		musique.start();
 		
 	}
@@ -88,6 +88,7 @@ public class Menu extends JPanel implements ActionListener{
 		
 		if (e.getSource() == play){
 			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			this.musique.stopMusic();
 			parent.getContentPane().remove(this);
 			parent.getContentPane().add(new Combat(true));
 			parent.getContentPane().invalidate();
@@ -96,6 +97,12 @@ public class Menu extends JPanel implements ActionListener{
 		}
 		else if (e.getSource() == tuto){
 			//TODO : ouvrir la fenêtre de tuto
+			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			this.musique.stopMusic();
+			parent.getContentPane().remove(this);
+			parent.getContentPane().add(new Tutopanel());
+			parent.getContentPane().invalidate();
+			parent.getContentPane().validate();
 		}
 		else if (e.getSource() == quitter){
 			//quitter le jeu

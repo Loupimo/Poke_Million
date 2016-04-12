@@ -20,12 +20,14 @@ public class Combat  extends JPanel {
 	private boolean gagnant; // définit le vainqueur du combat, le pokemon1 gagne si c'est à true
 	private String idPokemon1 = "84"; // Integer.toString(pokemon1.p_id)
 	private String idPokemon2 = "78"; // Integer.toString(pokemon2.p_id)
+	private AudioEngine audio;
 	
 	public Combat(boolean vainqueur /*,Pokemon pokemon1, Pokemon pokemon2*/){
 		
 		gagnant = vainqueur;
 
-		
+		this.audio = new AudioEngine("battle.wav");
+		audio.start();
 		
 		
 		String path = "./src/Images/arene.png"; //chemin de l'image de fond
