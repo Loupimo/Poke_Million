@@ -10,8 +10,11 @@ public class App {
 	public static CSVFile myCSV;
 	public static CSVFilter filtre = new CSVFilter(suffixes, descriptions);
 	public static MainFrame mainFrame;
-
+	public static IntroFrame introFrame;
+	//private StartingWindow sWin;
+	
 	public static void main(String[] args) {
+		
 		
 		try {
 			//Définit le style de la fenêtre de sélection avec celui du system
@@ -29,6 +32,9 @@ public class App {
 		
 		data = new DataLoader ();
 		data.init(new File ("PokemonData/Pokedex.csv"));
+		
+		introFrame = new IntroFrame();
+		introFrame.animationIntro();
 		
 		mainFrame = new MainFrame();
 		myCSV= new CSVFile();
@@ -66,7 +72,8 @@ public class App {
 		//TourDeCombat ligue = new TourDeCombat("sacha");
 		
 		
-			
+		//mainFrame = new MainFrame();
+		//mainFrame.animationIntro();
 		
 	}
 

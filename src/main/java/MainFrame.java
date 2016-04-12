@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
@@ -20,12 +21,14 @@ import javax.swing.JTextArea;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	
+	
 	public MainFrame() 
 	{
-		this.setSize(new Dimension(1000, 700));
+		//this.setSize(new Dimension(1000, 700));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menu1 = new JMenu("Fichier");
@@ -44,16 +47,26 @@ public class MainFrame extends JFrame {
 		JMenuItem changePokedex = new JMenuItem(new Pokedex("Changer de Pokédex"));
 		menu2.add(changePokedex);
 		menuBar.add(menu2);
-
+		
 		this.setJMenuBar(menuBar);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		
+		//this.setLayout(new FlowLayout());
 	}
 
+	
+	public void addMenu(){
+		this.add(new Menu());
+	}
+	
+	
+	
 	// ################################################
 	// ################ Private Class #################
 	// ################################################
 
+	
 	private static class LoadCSV extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
