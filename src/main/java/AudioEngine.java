@@ -6,11 +6,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class AudioEngine extends Thread{
-	private String name;
-	private AudioInputStream input;
-	private String path;
+	private String name; //Nom de la musique voulue
+	private AudioInputStream input; //Fichier d'entrée
+	private String path; //Chemin du fichier
 	public Clip clip;
-	private long length;
+	private long length; //Durée de la musique
 	
 	public AudioEngine(String n){
 		this.name = n;
@@ -20,16 +20,12 @@ public class AudioEngine extends Thread{
 	
 	public void run(){
 		try{
-			System.out.println(path);
 			input = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile()); //On récupère le fichier
 			clip = AudioSystem.getClip();
 			clip.open(input); //On ouvre le fichier
-			System.out.println("Clip opened :" + name);
 			length = clip.getMicrosecondLength(); //On lit la durée de lecture du fichier
 			clip.start(); //On lance le .wav
-			System.out.println("Clip started :" + length);
 			Thread.sleep(length/1000); //On arrête ce thread le temps que le .wav soit fini
-			
 			clip.stop();
 			return;
 		}
@@ -39,7 +35,7 @@ public class AudioEngine extends Thread{
 	}
 	
 	public void stopMusic(){
-		this.clip.stop();
-		this.stop();
+		this.clip.stop(); //Arrêt de la musique
+		this.stop(); //Arrêt de ce thread
 	}
 }
