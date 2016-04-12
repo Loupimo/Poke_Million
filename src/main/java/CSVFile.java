@@ -95,10 +95,10 @@ public class CSVFile
 	// ################################################
 		
 	@SuppressWarnings("unchecked")
-	public void init (File p_csvFile)
+	public void init (File file)
 	{ //Récupère certains champs du fichier CSV placé en paramètre afin de créer la base de donnée pour le combat
 		if (this.csvFile != null) this.clearOldCSV ();
-		this.csvFile = p_csvFile;
+		this.csvFile = file;
 		try {
 			List<String> lignes = this.getLignesFromFile();
 			String separator = ";";
@@ -220,9 +220,9 @@ public class CSVFile
 	{
 		LOGGER.debug ("clearALL");
 		this.memAllList.clear();
-		App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JTable"));
+		/*App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JTable"));
 		App.mainFrame.remove(App.mainFrame.findComponentByName (App.mainFrame.getContentPane(), "javax.swing.JScrollPane"));
-	}
+	*/}
 	
 	// ################################################
 	// ################### Getters ####################

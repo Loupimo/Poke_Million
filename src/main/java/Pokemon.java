@@ -17,13 +17,17 @@ public class Pokemon {
 	private LinkedList<String> typeList;
 	private LinkedList<String> weeknessList;
 	private int healthPoint;
+	private int currentHP;
 	private int attack;
+	private int speed;
+	private int defense;
 
 	// ################################################
 	// ############### Constructeurs ##################
 	// ################################################
 	
-	public Pokemon(int p_Id, String p_name, String spritePath, LinkedList<String> p_type, LinkedList<String> p_weekness) {
+	public Pokemon(int p_Id, String p_name, String spritePath, LinkedList<String> p_type, LinkedList<String> p_weekness)
+	{
 		this.Id = p_Id;
 		this.name = p_name;
 		this.sprite = new ImageIcon(spritePath);
@@ -31,15 +35,25 @@ public class Pokemon {
 		this.weeknessList = p_weekness;
 	}
 
-	public Pokemon(int p_Id, String p_name, ImageIcon p_sprite, String p_type, String p_weekness) {
+	public Pokemon(int p_Id, String p_name, ImageIcon p_sprite, String p_type, String p_weekness)
+	{
 		this.Id = p_Id;
 		this.name = p_name;
 		this.sprite = p_sprite;
 		this.typeList = new LinkedList<String> ();
 		this.typeList.add(p_type);
 		this.weeknessList = new LinkedList<String> ();
-		this.weeknessList.add(p_type);
-		
+		this.weeknessList.add(p_type);	
+	}
+	
+	public Pokemon(Pokemon poke)
+	{
+		this.Id = poke.getId();
+		this.name = poke.getName();
+		this.sprite = poke.getSprite();
+		this.typeList = new LinkedList<String> (poke.getTypeList());
+		this.weeknessList = new LinkedList<String> (poke.getWeeknessList());
+
 	}
 	
 	// ################################################
@@ -100,6 +114,15 @@ public class Pokemon {
 	{
 		return this.attack;
 	}
+	public int getDefense ()
+	{
+		return this.defense;
+	}
+	
+	public int getSpeed ()
+	{
+		return this.speed;
+	}
 	
 	// ################################################
 	// ################### Setters ####################
@@ -113,5 +136,22 @@ public class Pokemon {
 	public void setAttack (int p_Attack)
 	{
 		this.attack = p_Attack;
+	}
+	public void setCaract(int attack,int defense,int speed,int HP)
+	{
+		this.speed = speed;
+		this.defense = defense;
+		this.attack=attack;
+		this.healthPoint=HP;
+		this.currentHP = HP;
+	}
+
+	public void takeDamage(int attack) {
+		this.healthPoint -= attack;
+	}
+
+	public void resetHP() {
+		this.healthPoint = this .currentHP;
+		
 	}
 }

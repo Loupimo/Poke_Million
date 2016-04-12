@@ -5,6 +5,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CSVFilter extends FileFilter
 {	
+
 	protected String [] lesSuffixes;
 	protected String [] laDescription;
 	

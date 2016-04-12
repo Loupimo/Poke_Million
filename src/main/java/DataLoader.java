@@ -29,7 +29,7 @@ public class DataLoader {
 	// ################################################
 	// ################# Attributs ####################
 	// ################################################
-
+	
 	private static final Logger LOGGER = Logger.getLogger(DataLoader.class);
 	protected File data;
 	protected LinkedList<Pokemon> listePoke;
