@@ -27,6 +27,7 @@ public class MusicIntroControler extends Thread{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void stopMusic(){
 		this.opening.clip.stop();
 		this.opening.stop();

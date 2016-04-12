@@ -38,6 +38,7 @@ public class AudioEngine extends Thread{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void stopMusic(){
 		this.clip.stop();
 		this.stop();

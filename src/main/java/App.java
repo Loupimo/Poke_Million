@@ -36,7 +36,7 @@ public class App {
 		introFrame = new IntroFrame();
 		introFrame.animationIntro();
 		
-		mainFrame = new MainFrame();
+		//mainFrame = new MainFrame();
 		myCSV= new CSVFile();
 		myCSV.init(new File("PokemonData/euromillions_3.csv"));
 		

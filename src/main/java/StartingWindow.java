@@ -53,6 +53,7 @@ public class StartingWindow extends JPanel implements ActionListener{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e){
 		
