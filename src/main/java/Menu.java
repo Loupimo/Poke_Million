@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -20,13 +22,14 @@ public class Menu extends JPanel implements ActionListener{
 	private Settings set = new Settings();
 	private int rows, cols;
 	private AudioEngine musique;
+	private JLabel txtJouer, txtQuitter, txtAide, txtOptions;
 	
 	public Menu(){
 		super();
 		this.rows = 3;
 		this.cols = 6;
 		try {
-			img = ImageIO.read(new File("./src/Images/Menu.png"));
+			img = ImageIO.read(new File("./src/Images/fond2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,22 +37,25 @@ public class Menu extends JPanel implements ActionListener{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		this.play = new CustomButton("./src/Images/BoutonPokeball.png", 50, 50);
-		this.tuto = new CustomButton("./src/Images/BoutonSuperball.png", 50, 50);
-		this.quitter = new CustomButton("./src/Images/BoutonHyperball.png", 50, 50);
-		this.options = new CustomButton("./src/Images/BoutonMasterball.png", 50, 50);
+		this.play = new CustomButton("./src/Images/BoutonPokeballJouer.png", 120, 120);
+		this.tuto = new CustomButton("./src/Images/BoutonSuperballOption.png", 120, 120);
+		this.options = new CustomButton("./src/Images/BoutonHyperballAide.png", 120, 120);
+		this.quitter = new CustomButton("./src/Images/BoutonMasterballQuitter.png", 120, 120);
 		play.addActionListener(this);
 		tuto.addActionListener(this);
 		quitter.addActionListener(this);
 		options.addActionListener(this);
 		
-		c.weightx = 1;
+		
+		
+		c.weightx = 0;
+		c.weighty = 1;
 		
 		//Fixe les boutons à l'ouest
-		c.anchor = GridBagConstraints.WEST;
+		c.anchor = GridBagConstraints.SOUTH;
 		
 		//Définit les marges autour des boutons
-		c.insets = new Insets(20,200,20,20);
+		c.insets = new Insets(50,50,50,50);
 		
 		//Positionnement du bouton play
 		c.gridx = 0;
@@ -57,19 +63,21 @@ public class Menu extends JPanel implements ActionListener{
 		this.add(play, c);
 		
 		//Positionnement du bouton tuto
-		c.gridx = 0;
-		c.gridy = 1;
+		c.gridx = 1;
+		c.gridy = 0;
 		this.add(tuto, c);
 		
 		//Positionnement du bouton options
-		c.gridx = 0;
-		c.gridy = 2;
+		c.gridx = 2;
+		c.gridy = 0;
 		this.add(options, c);
 		
 		//Positionnement du bouton quitter
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridx = 3;
+		c.gridy = 0;
 		this.add(quitter, c);
+		
+		
 		
 		this.musique = new AudioEngine("Pokecenter.wav");
 		musique.start();
@@ -90,7 +98,8 @@ public class Menu extends JPanel implements ActionListener{
 			//TODO : ouvrir la fenêtre de tuto
 		}
 		else if (e.getSource() == quitter){
-			//TODO : quitter le jeu
+			//quitter le jeu
+			System.exit(0);
 		}
 		else if (e.getSource() == options){
 			//TODO : ouvrir la fenêtre de gestion des options

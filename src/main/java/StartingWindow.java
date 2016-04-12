@@ -1,6 +1,8 @@
 
 
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -17,14 +19,16 @@ public class StartingWindow extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private BufferedImage img; //Image de fond
 	private MusicIntroControler controler;
-	private CustomButton play;
+	private CustomButton play, titre;
 	
 	
 	public StartingWindow(){
 		super();	
-		this.play = new CustomButton("./src/Images/logoPokemon.png", 200, 500); //Bouton start
+		this.play = new CustomButton("./src/Images/boutonJouer.png", 350, 550); //Bouton start
+		this.titre = new CustomButton("./src/Images/logoPokemon.png", 200, 500); //titre (lance aussi le jeu)
 		play.addActionListener(this);
-		this.add(play);
+		titre.addActionListener(this);
+		
 		String path = "./src/Images/blastoise.jpg"; //chemin de l'image
 		try {
 			img = ImageIO.read(new File(path));
@@ -33,12 +37,26 @@ public class StartingWindow extends JPanel implements ActionListener{
 			e.printStackTrace();
 		}
 		
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.weighty = 1;
+		c.weightx = 1;
+		c.anchor = GridBagConstraints.CENTER;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(titre, c);
+		
+		c.gridy = 1;
+		this.add(play, c);
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
 		
-		if (e.getSource() == play){
+		if (e.getSource() == play || e.getSource() == titre){
 			//Coupe la musique et ouvre le menu
 			IntroFrame parent = (IntroFrame) SwingUtilities.getWindowAncestor(this);
 			controler.stopMusic();
