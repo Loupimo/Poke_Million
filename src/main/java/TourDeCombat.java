@@ -63,7 +63,7 @@ public class TourDeCombat extends JFrame{
 			if (J1p.getSpeed() > E1p.getSpeed()) //pokemon 1 plus rapide
 			{
 				E1p.takeDamage(J1p.getAttack()*coef2);
-				
+				System.out.println("joueur 1 inflige "+ J1p.getAttack()*coef2+"degats a l'ennemi");
 				if (E1p.getHealthPoint() <= 0)
 				{ //Le pokémon ennemi n'a plus de vie, on change de pokémon
 					id_ennemy++;
@@ -75,7 +75,8 @@ public class TourDeCombat extends JFrame{
 				else
 				{ //Le pokémon ennemi a toujours de la vie, il attaque
 					J1p.takeDamage(E1p.getAttack()*coef1);
-					
+
+					System.out.println("ennemieinflige "+ E1p.getAttack()*coef1+"degats au joueur 1");
 					if (J1p.getHealthPoint() <= 0)
 					{ //Le pokémon du joueur n'a plus de vie, on change de pokémon
 						id_joueur++;
@@ -86,19 +87,27 @@ public class TourDeCombat extends JFrame{
 			}
 			else
 			{ //Le pokémon ennemi attaque en premier 
-				J1p.takeDamage(E1p.getAttack());
+				J1p.takeDamage(E1p.getAttack()*coef1);
+
+				System.out.println("ennemieinflige "+ E1p.getAttack()*coef1+"degats au joueur 1");
 				if (J1p.getHealthPoint() <= 0)
 				{ //Le pokémon du joueur n'a plus de vie, on change de pokémon
 					id_joueur++;
+					coef1 =1;
+					coef2=1;
 					
 					 affichage.setImgPokemon1(id_joueur);// on affiche l'image du nouveau pokemon
 				}
 				else
 				{ //Le pokémon du joueur a toujours de la vie, il attaque
-					E1p.takeDamage(J1p.getAttack());
+					E1p.takeDamage(J1p.getAttack()*coef2);
+
+					System.out.println("joueur 1 inflige "+ J1p.getAttack()*coef2+"degats a l'ennemi");
 					if (E1p.getHealthPoint() <= 0)
 					{ //Le pokémon ennemi n'a plus de vie, on change de pokémon
 						id_ennemy++;
+						coef1 =1;
+						coef2=1;
 					}
 				}
 				
