@@ -108,7 +108,9 @@ public class Menu extends JPanel implements ActionListener{
 				this.musique.stopMusic();
 				parent.getContentPane().remove(this);
 				System.out.println("Lancement du jeu");
-				new Combat (parent, 6);
+				//new Combat (parent, 6);
+				parent.getContentPane().add(new Combat(6));
+				parent.getContentPane().revalidate();
 			}
 		}
 		else if (e.getSource() == tuto){ //Action du bouton "aide"

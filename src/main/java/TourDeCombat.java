@@ -1,5 +1,9 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -7,10 +11,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 
 public class TourDeCombat extends JPanel implements ActionListener {
@@ -18,46 +24,79 @@ public class TourDeCombat extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/*
-	private String name;
-	private Dresseur J1;
-	private int fighter;
-	*/
-	private MainFrame arene;
-	private JLabel imgpokemon1 = new JLabel(); // Image du pokémon1
-	private JLabel imgpokemon2 = new JLabel(); // Image du pokémon2
 	private Dresseur joueur, adversaire;
+	private BufferedImage img;
+	private AudioEngine audio;
 	
-	public TourDeCombat (MainFrame p_arene, Dresseur p_joueur, Dresseur p_adversaire)
+	public TourDeCombat (Dresseur p_joueur, Dresseur p_adversaire)
 	{
-		this.arene = p_arene;
+		super();
+		
+		this.audio = new AudioEngine("battle2.wav");
+		audio.start();
+		
+		//Obtention de l'image de fond
+		try {
+			img = ImageIO.read(new File("./src/Images/Arene.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.joueur = p_joueur;
 		this.adversaire = p_adversaire;
 
-		this.arene.setLayout(null);
-		
 		loadImgPoke(joueur.GetEquipe().get(0), adversaire.GetEquipe().get(0));
-
-		this.arene.pack();
-		this.arene.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.arene.setPreferredSize(new Dimension (this.arene.getWidth(), this.arene.getHeight()));
-		JLabel back = new JLabel (new ImageIcon("./src/Images/Arene.png"));
-		back.setBounds(0, 0, arene.getWidth(), arene.getHeight());
-		this.arene.add(back);
 		
-		this.arene.setVisible(true);
+
 	}	
 	
 	private void loadImgPoke (Pokemon joueur, Pokemon adversaire)
 	{ //Charge les images des pokémons sur le terrain
-		imgpokemon1.setIcon(new ImageIcon("./PokemonData/Sprites/back/" + joueur.getId() + ".png"));
+		/*Settings set = new Settings();
+		ImageIcon img = new ImageIcon("./PokemonData/Sprites/back/" + joueur.getId() + ".png");
+		imgpokemon1.setIcon((Icon)img.getImage().getScaledInstance(set.getWidth()/10, set.getHeight()/2, Image.SCALE_DEFAULT));
 		imgpokemon2.setIcon(new ImageIcon("./PokemonData/Sprites/" + adversaire.getId() + ".png"));
 		
-		imgpokemon1.setBounds(arene.getWidth() / 10, arene.getHeight() - (arene.getHeight() / 2), arene.getWidth() / 3, arene.getHeight() / 2);	
+		//imgpokemon1.setBounds(arene.getWidth() / 10, arene.getHeight() - (arene.getHeight() / 2), arene.getWidth() / 3, arene.getHeight() / 2);	
 		imgpokemon2.setBounds (arene.getWidth() - ((arene.getWidth() / 5) * 2), arene.getHeight() / 4, arene.getWidth() / 3,arene.getHeight() / 3);
 		
 		this.arene.add(imgpokemon1);
-		this.arene.add(imgpokemon2);
+		this.arene.add(imgpokemon2);*/
+		
+		
+		/*Settings set = new Settings();
+		BufferedImage img1;
+		try {
+			img1 = ImageIO.read(new File("./PokemonData/Sprites/back/" + joueur.getId() + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		img1 = (BufferedImage) img1.getScaledInstance(set.getWidth(), set.getHeight(), Image.SCALE_SMOOTH);*/
+		
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		Settings set = new Settings();
+		
+		c.weightx = 1;
+		c.weighty = 1;
+		
+		/*c.gridwidth = 2;
+		c.gridheight = 3;*/
+		
+		c.anchor = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.BOTH;
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		
+		PokeSprite sprite = new PokeSprite("./PokemonData/Sprites/back/" + joueur.getId() + ".png", set.getWidth()/2, set.getHeight()/2);
+		this.add(sprite, c);
+		
+		sprite = new PokeSprite("./PokemonData/Sprites/" + adversaire.getId() + ".png", set.getWidth()/5, set.getHeight()/3);
+		c.gridx = 1;
+		c.gridy = 0;
+		//c.anchor = GridBagConstraints.LINE_END;
+		this.add(sprite, c);
+		
 	}
 	
 	private void combat(Dresseur J1, Dresseur ennemy)
@@ -130,6 +169,15 @@ public class TourDeCombat extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//Affiche l'image de fond
+	public void paintComponent(Graphics g) 
+	{ 
+		Settings set = new Settings(); //Donne des infos sur la taille de l'écran de l'utilisateur
+		g.drawImage(img, 0, 0, set.getWidth(), set.getHeight() - 50, null);
+
+		repaint(); 
 	}
 	
 	

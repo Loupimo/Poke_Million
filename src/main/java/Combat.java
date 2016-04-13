@@ -1,8 +1,16 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Combat extends JPanel implements ActionListener{
 
@@ -14,20 +22,27 @@ public class Combat extends JPanel implements ActionListener{
 	private JButton oui = new JButton ("Oui"), non = new JButton("Non"), affronter [] = new JButton [3];
 	private int teamSize;
 	private AudioEngine audio;
-
-	public Combat(MainFrame p_plateau, int p_teamSize) {
-
+	private BufferedImage img;
+	
+	public Combat(int p_teamSize) {
+		super();
+		//Obtention de l'image de fond
+		try {
+			this.img = ImageIO.read(new File("./src/Images/Versus.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		this.teamSize = p_teamSize;
-		this.plateau = p_plateau;
-		this.plateau.setLayout(null);
-		this.audio = new AudioEngine("battle.wav");
-		audio.start();
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
 		
 		
 		this.teamPrinter = new JPanel ();
 		this.teamPrinter.setBackground(new Color (150,150,150,150));
 		this.teamPrinter.setLayout(new BoxLayout (this.teamPrinter, BoxLayout.PAGE_AXIS));
-		this.teamPrinter.setBounds(200, this.plateau.getHeight()/2-90, 56*teamSize+20, 180);
+		this.teamPrinter.setBounds(200, this.getHeight()/2-90, 56*teamSize+20, 180);
 		
 		this.nameGetter = new JTextField();
 		this.nameGetter.setText("Entrez votre nom de Dresseur");
@@ -46,64 +61,40 @@ public class Combat extends JPanel implements ActionListener{
 		horizontal.add(oui);
 		horizontal.add(non);
 		this.teamPrinter.add(horizontal);
-		this.plateau.add(this.teamPrinter);
 		
+		c.weightx = 1;
+		c.weighty = 1;
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(20,40,20,40);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		this.add(this.teamPrinter, c);
+		
+		c.gridx = 1;
+		c.anchor = GridBagConstraints.EAST;
 		for (int i = 0; i < 3; i++)
 		{
 			this.ennemyPrinter[i] = new JPanel ();
 			this.ennemyPrinter[i].setBackground(new Color (150,150,150,150));
 			this.ennemyPrinter[i].setLayout(new BoxLayout (this.ennemyPrinter[i], BoxLayout.PAGE_AXIS));
-			this.ennemyPrinter[i].setBounds(this.plateau.getWidth()-56*teamSize-200,  this.plateau.getHeight()/2+(-270+i*180), 56*teamSize+20, 180);
+			this.ennemyPrinter[i].setBounds(this.getWidth()-56*teamSize-200,  this.getHeight()/2+(-270+i*180), 56*teamSize+20, 180);
 			printDresseurEquipeInJPanel(this.opponent[i], this.ennemyPrinter[i]);
 			this.ennemyPrinter[i].setBorder (BorderFactory.createTitledBorder(this.opponent[i].getName()));
-			
+			c.gridy = i;
 			affronter[i] = new JButton ("Affronter");
 			affronter[i].addActionListener (this);
 			this.ennemyPrinter[i].add(affronter[i]);
-			this.plateau.add(ennemyPrinter[i]);
+			this.add(ennemyPrinter[i], c);
 		}
 		
-		/*this.ennemyPrinter[0] = new JPanel ();
-		this.ennemyPrinter[0].setLayout(new BoxLayout (this.ennemyPrinter[0], BoxLayout.PAGE_AXIS));
-		this.ennemyPrinter[0].setBounds(this.plateau.getWidth()-56*teamSize-200,  this.plateau.getHeight()/2-270, 56*teamSize+20, 180);
-		printDresseurEquipeInJPanel(this.opponent[0], this.ennemyPrinter[0]);
-		this.ennemyPrinter[0].setBorder (BorderFactory.createTitledBorder(this.opponent[0].getName()));
 		
-		JButton affronter0 = new JButton ("Affronter");
-		this.ennemyPrinter[0].add(affronter0);
+		this.setPreferredSize(new Dimension (this.getWidth(), this.getHeight()));
 		
-		this.ennemyPrinter[1] = new JPanel ();
-		this.ennemyPrinter[1].setLayout(new BoxLayout (this.ennemyPrinter[1], BoxLayout.PAGE_AXIS));
-		this.ennemyPrinter[1].setBounds(this.plateau.getWidth()-56*teamSize-200, this.plateau.getHeight()/2-90, 56*teamSize+20, 180);
-		printDresseurEquipeInJPanel(this.opponent[1], this.ennemyPrinter[1]);
-		this.ennemyPrinter[1].setBorder (BorderFactory.createTitledBorder(this.opponent[1].getName()));
 		
-		JButton affronter1 = new JButton ("Affronter");
-		this.ennemyPrinter[1].add(affronter1);
-		
-		this.ennemyPrinter[2] = new JPanel ();
-		this.ennemyPrinter[2].setLayout(new BoxLayout (this.ennemyPrinter[2], BoxLayout.PAGE_AXIS));
-		this.ennemyPrinter[2].setBounds(this.plateau.getWidth()-56*teamSize-200, this.plateau.getHeight()/2+90, 56*teamSize+20, 180);
-		printDresseurEquipeInJPanel(this.opponent[2], this.ennemyPrinter[2]);
-		this.ennemyPrinter[2].setBorder (BorderFactory.createTitledBorder(this.opponent[2].getName()));
-		
-		JButton affronter2 = new JButton ("Affronter");
-		this.ennemyPrinter[2].add(affronter2);
-		
-		this.plateau.add(ennemyPrinter[0]);
-		this.plateau.add(ennemyPrinter[1]);
-		this.plateau.add(ennemyPrinter[2]);*/
-		/*loadImgPoke (player.getPokemon(0), opponent.getPokemon(0));
-		while (nbTours > 0) {
-			tour();
-		}*/
-		this.plateau.pack();
-		this.plateau.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.plateau.setPreferredSize(new Dimension (this.plateau.getWidth(), this.plateau.getHeight()));
-		JLabel back = new JLabel (new ImageIcon("./src/Images/Versus.png"));
-		back.setBounds(0, 0, this.plateau.getWidth(), this.plateau.getHeight());
-		this.plateau.add(back);
-		this.plateau.setVisible(true);
+		this.audio = new AudioEngine("battle.wav");
+		audio.start();
+		this.setVisible(true);
 	}
 
 	private void printDresseurEquipeInJPanel (Dresseur dresseur, JPanel container)
@@ -149,9 +140,8 @@ public class Combat extends JPanel implements ActionListener{
 		}
 		else if (evt.getSource() == this.non)
 		{ // Met à jour l'équipe du joueur
-			this.player.setRandomEquipe(this.teamSize);
-			
 			this.teamPrinter.removeAll();
+			this.player.setRandomEquipe(this.teamSize);
 			this.teamPrinter.add(this.nameGetter);
 			this.teamPrinter.setBorder (BorderFactory.createTitledBorder("Votre équipe"));
 			
@@ -162,14 +152,25 @@ public class Combat extends JPanel implements ActionListener{
 			horizontal.add(oui);
 			horizontal.add(non);
 			this.teamPrinter.add(horizontal);
-			this.plateau.pack();
-			this.plateau.setVisible(true);
+			//this.repaint();
+			this.setVisible(true);
 		}
 		else if (evt.getSource() == this.affronter[0] || evt.getSource() == this.affronter[1] || evt.getSource() == this.affronter[2])
 		{
 			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
-			this.plateau.dispose(); //Ferme la fenêtre courrante
-			new TourDeCombat (new MainFrame(), this.player, this.opponent[0]);
+			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			audio.stopMusic();
+			parent.getContentPane().remove(this);
+			parent.getContentPane().add(new TourDeCombat(this.player, this.opponent[0]));
+			parent.getContentPane().revalidate();
 		}
 	}
+	
+	//Affiche l'image de fond
+	public void paintComponent(Graphics g) 
+	{ 
+		Settings set = new Settings(); //Donne des infos sur la taille de l'écran de l'utilisateur
+		g.drawImage(img, 0, 0, set.getWidth(), set.getHeight() - 50, null);
+		repaint(); 
+	} 
 }
