@@ -9,7 +9,7 @@ public class TourDeCombat extends JFrame{
 	/*
 	private String name;
 	private Dresseur J1;
-	private int fighter;
+	private int fighter;x
 	*/
 	
 	private Dresseur joueur, adversaire;
