@@ -169,7 +169,7 @@ public class Combat extends JPanel implements ActionListener{
 		{
 			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
 			this.plateau.dispose(); //Ferme la fenêtre courrante
-			new TourDeCombat (new MainFrame(), this.player, this.opponent[0]);
+			new TourDeCombat (this.player, this.opponent[0]);
 		}
 	}
 }
