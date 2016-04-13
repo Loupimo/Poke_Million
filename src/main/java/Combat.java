@@ -27,8 +27,7 @@ public class Combat extends JPanel implements ActionListener{
 		this.teamPrinter = new JPanel ();
 		this.teamPrinter.setBackground(new Color (150,150,150,150));
 		this.teamPrinter.setLayout(new BoxLayout (this.teamPrinter, BoxLayout.PAGE_AXIS));
-		this.teamPrinter.setBounds(200, this.plateau.getHeight()/2-90, 56*teamSize+20, 180);
-		
+		this.teamPrinter.setBounds(200, this.plateau.getHeight()/2-90, 56*6+20, 180);
 		this.nameGetter = new JTextField();
 		this.nameGetter.setText("Entrez votre nom de Dresseur");
 		this.nameGetter.addActionListener (this);
@@ -53,7 +52,7 @@ public class Combat extends JPanel implements ActionListener{
 			this.ennemyPrinter[i] = new JPanel ();
 			this.ennemyPrinter[i].setBackground(new Color (150,150,150,150));
 			this.ennemyPrinter[i].setLayout(new BoxLayout (this.ennemyPrinter[i], BoxLayout.PAGE_AXIS));
-			this.ennemyPrinter[i].setBounds(this.plateau.getWidth()-56*teamSize-200,  this.plateau.getHeight()/2+(-270+i*180), 56*teamSize+20, 180);
+			this.ennemyPrinter[i].setBounds(this.plateau.getWidth()-56*6-200,  this.plateau.getHeight()/2+(-270+i*180), 56*6+20, 180);
 			printDresseurEquipeInJPanel(this.opponent[i], this.ennemyPrinter[i]);
 			this.ennemyPrinter[i].setBorder (BorderFactory.createTitledBorder(this.opponent[i].getName()));
 			

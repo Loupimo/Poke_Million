@@ -11,7 +11,7 @@ public class App {
 	public static CSVFilter filtre = new CSVFilter(suffixes, descriptions);
 	public static MainFrame mainFrame;
 	public static IntroFrame introFrame;
-	//private StartingWindow sWin;
+	public static int teamSize = 3;
 	
 	public static void main(String[] args) {
 		

@@ -108,7 +108,7 @@ public class Menu extends JPanel implements ActionListener{
 				this.musique.stopMusic();
 				parent.getContentPane().remove(this);
 				System.out.println("Lancement du jeu");
-				new Combat (parent, 6);
+				new Combat (parent, App.teamSize);
 			}
 		}
 		else if (e.getSource() == tuto){ //Action du bouton "aide"
@@ -123,7 +123,12 @@ public class Menu extends JPanel implements ActionListener{
 			System.exit(0); //Ferme le programme
 		}
 		else if (e.getSource() == options){ //Action du bouton "options"
-			//TODO : ouvrir la fenêtre de gestion des options
+			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			this.musique.stopMusic();
+			parent.getContentPane().remove(this);
+			parent.getContentPane().add(new OptionsPanel());
+			parent.getContentPane().invalidate();
+			parent.getContentPane().validate();
 		}
 	}
 	

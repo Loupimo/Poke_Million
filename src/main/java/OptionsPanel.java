@@ -1,31 +1,36 @@
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 /**JPanel de tutoriel**/
-public class Tutopanel extends JPanel implements ActionListener{
+public class OptionsPanel extends JPanel implements ActionListener, ChangeListener{
 	private static final long serialVersionUID = 1L;
 	private BufferedImage img; //Image de fond
 	private CustomButton retour; //Bouton de retour au menu
 	private AudioEngine audio; //Musique
+	private JSlider teamSize;
 	
 	
-	public Tutopanel(){
+	public OptionsPanel(){
 		super();
 		
 		//Récupération de l'image de fond
 		try {
-			img = ImageIO.read(new File("./src/Images/tuto.png"));
+			img = ImageIO.read(new File("./src/Images/Options.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,15 +50,30 @@ public class Tutopanel extends JPanel implements ActionListener{
 		c.weightx = 1;
 		c.weighty = 1;
 		
-		c.anchor = GridBagConstraints.EAST;
+		c.anchor = GridBagConstraints.NORTHEAST;
 		
 		
 		//Positionnement du bouton retour
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets (0, 0, 150, 0);
 		
 		this.add(retour, c);
+		
+		c.anchor = GridBagConstraints.CENTER;
+		teamSize = new JSlider (JSlider.HORIZONTAL, 3, 6, 3);
+		teamSize.setMajorTickSpacing(3);
+        teamSize.setMinorTickSpacing(1);
+        teamSize.setLabelTable(teamSize.createStandardLabels(1));
+        teamSize.setPaintTrack(true);
+		teamSize.setPaintTicks(true);
+		teamSize.setPaintLabels(true);
+		teamSize.setBorder(BorderFactory.createTitledBorder("Nombre de pokémons par équipe"));
+        Font font = new Font("Serif", Font.ITALIC, 15);
+        teamSize.setFont(font);
+		
+		teamSize.addChangeListener(this);
+		
+		this.add(teamSize, c);
 		
 		retour.addActionListener(this); //Listener
 		
@@ -65,7 +85,7 @@ public class Tutopanel extends JPanel implements ActionListener{
 	//Affiche l'image de fond
 	public void paintComponent(Graphics g) { 
 		Settings set = new Settings();
-		g.drawImage(img, 0, 0, set.getWidth(), set.getHeight() - 100, null);
+		g.drawImage(img, 0, 0, set.getWidth(), set.getHeight() - 50, null);
 		repaint(); 
 	} 
 
@@ -83,6 +103,11 @@ public class Tutopanel extends JPanel implements ActionListener{
 			parent.getContentPane().invalidate();
 			parent.getContentPane().validate();
 		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent arg0) {
+		App.teamSize = this.teamSize.getValue();
 	}
 	
 }
