@@ -84,7 +84,7 @@ public class TourDeCombat extends JFrame {
 					affichage.pvPlayer.setText("Défense: " + J1p.getDefense() + ", Vitesse: " + J1p.getSpeed() + ", Attaque: " + J1p.getAttack() + ", PV: " + J1p.getHealthPoint() + "/" + maxPvJoueur);
 					
 					LOGGER.debug("Attaque\nPV Joueur: " + J1p.getHealthPoint());
-					
+
 					if (J1p.getHealthPoint() <= 0)
 					{ //Le pokémon du joueur n'a plus de vie, on change de pokémon
 						
@@ -108,7 +108,7 @@ public class TourDeCombat extends JFrame {
 				affichage.pvPlayer.setText("Défense: " + J1p.getDefense() + ", Vitesse: " + J1p.getSpeed() + ", Attaque: " + J1p.getAttack() + ", PV: " + J1p.getHealthPoint() + "/" + maxPvJoueur);
 				
 				LOGGER.debug("Attaque\nPV Joueur: " + J1p.getHealthPoint());
-				
+			
 				if (J1p.getHealthPoint() <= 0)
 				{ //Le pokémon du joueur n'a plus de vie, on change de pokémon
 					if (!J1.hasPokemon()) return -1;
@@ -128,6 +128,8 @@ public class TourDeCombat extends JFrame {
 					
 					LOGGER.debug("Attaque\nPV Ennemi: " + E1p.getHealthPoint());
 					
+					E1p.takeDamage(J1p.getAttack()*coef2);
+
 					if (E1p.getHealthPoint() <= 0)
 					{ //Le pokémon ennemi n'a plus de vie, on change de pokémon
 						
@@ -140,8 +142,7 @@ public class TourDeCombat extends JFrame {
 						
 						affichage.setImgPokemon2(id_ennemy);// on affiche l'image du nouveau pokemon
 					}
-				}
-				
+				}	
 			}
 		}
 		return 0;
