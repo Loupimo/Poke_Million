@@ -62,7 +62,7 @@ public class TourDeCombat extends JPanel implements ActionListener {
 	
 	private void combat(Dresseur J1, Dresseur ennemy)
 	{
-		int id_joueur = 0, id_ennemy = 0;
+		int id_joueur = 0, id_ennemy = 0,coef1 =1,coef2 =1;
 		Pokemon J1p, E1p;
 		try
 		{
@@ -72,21 +72,41 @@ public class TourDeCombat extends JPanel implements ActionListener {
 
 			J1p = J1.getPokemon(id_joueur);
 			E1p = ennemy.getPokemon(id_ennemy);
+			for (String type : E1p.getTypeList())
+			{
+				if (J1p.getWeeknessList().contains(type))
+				{
+				coef1*=2;	
+				}
+			
+			}
+			for (String type : J1p.getTypeList())
+			{
+				if (E1p.getWeeknessList().contains(type))
+				{
+				coef2*=2;	
+				}
+			
+			}
 			if (J1p.getSpeed() > E1p.getSpeed()) //pokemon 1 plus rapide
 			{
-				E1p.takeDamage(J1p.getAttack());
+				E1p.takeDamage(J1p.getAttack()*coef2);
 				
 				if (E1p.getHealthPoint() <= 0)
 				{ //Le pokémon ennemi n'a plus de vie, on change de pokémon
 					id_ennemy++;
+					coef1 =1;
+					coef2=1;
 				}
 				else
 				{ //Le pokémon ennemi a toujours de la vien il attaque
-					J1p.takeDamage(E1p.getAttack());
+					J1p.takeDamage(E1p.getAttack()*coef1);
 					
 					if (J1p.getHealthPoint() <= 0)
 					{ //Le pokémon du joueur n'a plus de vie, on change de pokémon
 						id_joueur++;
+						coef1 =1;
+						coef2=1;
 					}
 				}
 			}
