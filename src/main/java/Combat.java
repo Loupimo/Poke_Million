@@ -99,7 +99,7 @@ public class Combat extends JPanel implements ActionListener{
 		}*/
 		this.plateau.pack();
 		this.plateau.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.plateau.setPreferredSize(new Dimension (this.plateau.getWidth(), this.plateau.getHeight()));
+		this.plateau.setPreferredSize(new Dimension (1382, 744));
 		JLabel back = new JLabel (new ImageIcon("./src/Images/Versus.png"));
 		back.setBounds(0, 0, this.plateau.getWidth(), this.plateau.getHeight());
 		this.plateau.add(back);
@@ -149,11 +149,18 @@ public class Combat extends JPanel implements ActionListener{
 		}
 		else if (evt.getSource() == this.non)
 		{ // Met à jour l'équipe du joueur
-			this.player.setRandomEquipe(this.teamSize);
 			
+			this.player.setRandomEquipe(this.teamSize); // Définit une nouvelle équipe our le joueur
+			
+			/*-----Supprime son ancien affichage*/
 			this.teamPrinter.removeAll();
+			this.teamPrinter.repaint();
+			this.teamPrinter.setVisible(false);
+			this.teamPrinter.setVisible(true);
+			/*----------------------------------*/
+			
+			/*------Met à jour son affichage----*/
 			this.teamPrinter.add(this.nameGetter);
-			this.teamPrinter.setBorder (BorderFactory.createTitledBorder("Votre équipe"));
 			
 			printDresseurEquipeInJPanel(this.player, this.teamPrinter);
 	
@@ -163,13 +170,25 @@ public class Combat extends JPanel implements ActionListener{
 			horizontal.add(non);
 			this.teamPrinter.add(horizontal);
 			this.plateau.pack();
-			this.plateau.setVisible(true);
+			/*----------------------------------*/
 		}
-		else if (evt.getSource() == this.affronter[0] || evt.getSource() == this.affronter[1] || evt.getSource() == this.affronter[2])
-		{
+		else if (evt.getSource() == this.affronter[0])
+		{ // Premier adversaire choisit
 			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
 			this.plateau.dispose(); //Ferme la fenêtre courrante
 			new TourDeCombat (this.player, this.opponent[0]);
+		}
+		else if (evt.getSource() == this.affronter[1])
+		{ // Deuxième adversaire choisit
+			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
+			this.plateau.dispose(); //Ferme la fenêtre courrante
+			new TourDeCombat (this.player, this.opponent[1]);
+		}
+		else if (evt.getSource() == this.affronter[2])
+		{ // Troisième adversaire choisit
+			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
+			this.plateau.dispose(); //Ferme la fenêtre courrante
+			new TourDeCombat (this.player, this.opponent[2]);
 		}
 	}
 }

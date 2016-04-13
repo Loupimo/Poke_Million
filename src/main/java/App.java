@@ -32,7 +32,8 @@ public class App {
 		
 		data = new DataLoader ();
 		data.init(new File ("PokemonData/Pokedex.csv"));
-		
+		myCSV = new CSVFile();
+		myCSV.init(new File("PokemonData/euromillions_3.csv"));
 		introFrame = new IntroFrame();
 		introFrame.animationIntro();
 		
