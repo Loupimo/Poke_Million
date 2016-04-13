@@ -47,15 +47,19 @@ public class Dresseur {
 		return equipe;
 	}
 	
+	public void setRandomEquipe (int size)
+	{
+		this.equipe = getRandomEquipe (size);
+	}
 	
 	public LinkedList<Pokemon> getRandomEquipe(int size) throws IllegalArgumentException
 	{
 		LOGGER.debug("getRandaomEquipe");
 		LinkedList<Pokemon> result = new LinkedList<Pokemon>();
-		if (size <6 && size >0)
+		if (size <= 6 && size > 0)
 		{
 			int i;
-			for (i=0;i<size;i++)
+			for (i=0; i < size;i++)
 			{
 				result.add(GetRandomPokemon());
 			}
@@ -82,24 +86,24 @@ public class Dresseur {
 	
 	private Pokemon GetRandomPokemon() {
 		List<Integer> randomIndex= new ArrayList<>();
-		for(int i = 0; i<222;i++)
+		for(int i = 0; i<221;i++)
 		{
 			randomIndex.add(i);
 		}
 		Collections.shuffle(randomIndex);
-		int index = (int) Math.random()*221;
+		int index = (int) Math.random()*220;
 		index = randomIndex.get(index);
 		Pokemon result = new Pokemon(App.data.getPokelist().get((int)App.myCSV.getValueOfAList(0, index)%151));
 		
-		int attack = (int) Math.random()*221;
+		int attack = (int) Math.random()*220;
 		attack = randomIndex.get(attack);
 		attack = (int)App.myCSV.getValueOfAList(1, attack);
 		
-		int HP = (int) Math.random()*221;
+		int HP = (int) Math.random()*220;
 		HP = randomIndex.get(HP);
 		HP = 3*(int)App.myCSV.getValueOfAList(2, HP);
 		
-		int speed = (int) Math.random()*221;
+		int speed = (int) Math.random()*220;
 		speed = randomIndex.get(speed);
 		speed = (int)App.myCSV.getValueOfAList(3, speed);
 		
@@ -168,6 +172,10 @@ public class Dresseur {
 		{
 			curr.resetHP();
 		}
-		
+	}
+	
+	public void setName (String name)
+	{
+		this.nom = name;
 	}
 }

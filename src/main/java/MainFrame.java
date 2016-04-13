@@ -22,7 +22,6 @@ public class MainFrame extends JFrame {
 	public MainFrame() 
 	{
 		super ("Poké Million");
-		//this.setSize(new Dimension(1000, 700));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		JMenuBar menuBar = new JMenuBar();
@@ -31,11 +30,9 @@ public class MainFrame extends JFrame {
 		JMenuItem ouvrir = new JMenuItem(new CSV("Charger un CSV"));
 		JMenuItem afficher = new JMenuItem(new CSV("Afficher un CSV"));
 		// JMenuItem sauver = new JMenuItem(new SaveCSV("Sauver"));
-		// JMenuItem quitter = new JMenuItem(new QuitterAction("Quitter"));
 		menu1.add(ouvrir);
 		// menu1.add(sauver);
 		menu1.add(afficher);
-		// menu1.add(quitter);
 		menuBar.add(menu1);
 
 		JMenu menu2 = new JMenu("Pokédex");
@@ -48,8 +45,6 @@ public class MainFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		
-		//this.setLayout(new FlowLayout());
 	}
 
 	

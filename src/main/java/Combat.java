@@ -1,144 +1,175 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+public class Combat extends JPanel implements ActionListener{
 
-
-public class Combat  extends JPanel {
-	
 	private static final long serialVersionUID = 1L;
-	private BufferedImage img; //Image de fond
-	private BufferedImage imgpokemon1; // Image du pokémon1
-	private BufferedImage imgpokemon2; // Image du pokémon2
-	private int nbTours =  (int)((Math.random()*66)%3)+1; //nombre de tours du combat restants entre 1 et 3
-	private int initiative = (int)((Math.random()*60)%2); // numéro du pokémon qui commencera
-	private int pdvPokemon1 = 100; // points de vie du premier pokemon
-	private int pdvPokemon2 = 100; // points de vie du second pokemon
-	private boolean gagnant; // définit le vainqueur du combat, le pokemon1 gagne si c'est à true
-	private String idPokemon1 = "84"; // Integer.toString(pokemon1.p_id)
-	private String idPokemon2 = "78"; // Integer.toString(pokemon2.p_id)
+	private Dresseur player, opponent [] = new Dresseur [3];
+	private MainFrame plateau;
+	private JTextField nameGetter;
+	private JPanel teamPrinter, ennemyPrinter [] = new JPanel [3];
+	private JButton oui = new JButton ("Oui"), non = new JButton("Non"), affronter [] = new JButton [3];
+	private int teamSize;
 	private AudioEngine audio;
-	
-	public Combat(boolean vainqueur /*,Pokemon pokemon1, Pokemon pokemon2*/){
-		
-		gagnant = vainqueur;
 
+	public Combat(MainFrame p_plateau, int p_teamSize) {
+
+		this.teamSize = p_teamSize;
+		this.plateau = p_plateau;
+		this.plateau.setLayout(null);
 		this.audio = new AudioEngine("battle.wav");
 		audio.start();
 		
 		
-		String path = "./src/Images/arene.png"; //chemin de l'image de fond
-		String pathpoke1 = "./PokemonData/Sprites/back/".concat(idPokemon1).concat(".png"); //chemin de l'image du pokemon1
-		String pathpoke2 = "./PokemonData/Sprites/".concat(idPokemon2).concat(".png"); //chemin de l'image du pokemon2
-		try {
-			img = ImageIO.read(new File(path));
-			imgpokemon1 = ImageIO.read(new File(pathpoke1));;
-			imgpokemon2 = ImageIO.read(new File(pathpoke2));;
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();	
-		}
-		while(nbTours > 0)
+		this.teamPrinter = new JPanel ();
+		this.teamPrinter.setBackground(new Color (150,150,150,150));
+		this.teamPrinter.setLayout(new BoxLayout (this.teamPrinter, BoxLayout.PAGE_AXIS));
+		this.teamPrinter.setBounds(200, this.plateau.getHeight()/2-90, 56*teamSize+20, 180);
+		
+		this.nameGetter = new JTextField();
+		this.nameGetter.setText("Entrez votre nom de Dresseur");
+		this.nameGetter.addActionListener (this);
+		this.teamPrinter.add(this.nameGetter);
+		this.teamPrinter.setBorder (BorderFactory.createTitledBorder("Votre équipe"));
+		
+		this.setBegin ();
+		printDresseurEquipeInJPanel(this.player, this.teamPrinter);
+		
+		
+		Box horizontal = Box.createHorizontalBox();
+		horizontal.add(new JLabel ("Voulez-vous garder cette équipe: "));
+		oui.addActionListener (this);
+		non.addActionListener (this);
+		horizontal.add(oui);
+		horizontal.add(non);
+		this.teamPrinter.add(horizontal);
+		this.plateau.add(this.teamPrinter);
+		
+		for (int i = 0; i < 3; i++)
 		{
+			this.ennemyPrinter[i] = new JPanel ();
+			this.ennemyPrinter[i].setBackground(new Color (150,150,150,150));
+			this.ennemyPrinter[i].setLayout(new BoxLayout (this.ennemyPrinter[i], BoxLayout.PAGE_AXIS));
+			this.ennemyPrinter[i].setBounds(this.plateau.getWidth()-56*teamSize-200,  this.plateau.getHeight()/2+(-270+i*180), 56*teamSize+20, 180);
+			printDresseurEquipeInJPanel(this.opponent[i], this.ennemyPrinter[i]);
+			this.ennemyPrinter[i].setBorder (BorderFactory.createTitledBorder(this.opponent[i].getName()));
+			
+			affronter[i] = new JButton ("Affronter");
+			affronter[i].addActionListener (this);
+			this.ennemyPrinter[i].add(affronter[i]);
+			this.plateau.add(ennemyPrinter[i]);
+		}
+		
+		/*this.ennemyPrinter[0] = new JPanel ();
+		this.ennemyPrinter[0].setLayout(new BoxLayout (this.ennemyPrinter[0], BoxLayout.PAGE_AXIS));
+		this.ennemyPrinter[0].setBounds(this.plateau.getWidth()-56*teamSize-200,  this.plateau.getHeight()/2-270, 56*teamSize+20, 180);
+		printDresseurEquipeInJPanel(this.opponent[0], this.ennemyPrinter[0]);
+		this.ennemyPrinter[0].setBorder (BorderFactory.createTitledBorder(this.opponent[0].getName()));
+		
+		JButton affronter0 = new JButton ("Affronter");
+		this.ennemyPrinter[0].add(affronter0);
+		
+		this.ennemyPrinter[1] = new JPanel ();
+		this.ennemyPrinter[1].setLayout(new BoxLayout (this.ennemyPrinter[1], BoxLayout.PAGE_AXIS));
+		this.ennemyPrinter[1].setBounds(this.plateau.getWidth()-56*teamSize-200, this.plateau.getHeight()/2-90, 56*teamSize+20, 180);
+		printDresseurEquipeInJPanel(this.opponent[1], this.ennemyPrinter[1]);
+		this.ennemyPrinter[1].setBorder (BorderFactory.createTitledBorder(this.opponent[1].getName()));
+		
+		JButton affronter1 = new JButton ("Affronter");
+		this.ennemyPrinter[1].add(affronter1);
+		
+		this.ennemyPrinter[2] = new JPanel ();
+		this.ennemyPrinter[2].setLayout(new BoxLayout (this.ennemyPrinter[2], BoxLayout.PAGE_AXIS));
+		this.ennemyPrinter[2].setBounds(this.plateau.getWidth()-56*teamSize-200, this.plateau.getHeight()/2+90, 56*teamSize+20, 180);
+		printDresseurEquipeInJPanel(this.opponent[2], this.ennemyPrinter[2]);
+		this.ennemyPrinter[2].setBorder (BorderFactory.createTitledBorder(this.opponent[2].getName()));
+		
+		JButton affronter2 = new JButton ("Affronter");
+		this.ennemyPrinter[2].add(affronter2);
+		
+		this.plateau.add(ennemyPrinter[0]);
+		this.plateau.add(ennemyPrinter[1]);
+		this.plateau.add(ennemyPrinter[2]);*/
+		/*loadImgPoke (player.getPokemon(0), opponent.getPokemon(0));
+		while (nbTours > 0) {
 			tour();
-		}
-		}
-	
-		private void tour()
-		{
-			int degats;
-			
-			nbTours --;
-			
-			if(nbTours == 0)
-			{
-				  if(initiative == 1)
-				  {
-					  if(gagnant == true )
-					  {
-						  System.out.println("Pokemon 1 inflige ".concat(Integer.toString(pdvPokemon2)).concat(" points de dégat"));
-						  pdvPokemon2 = 0;		
-						  System.out.println("Pokemon 1 gagne");
-					  }
-					  else
-					  {
-						  degats = (int)((Math.random()*100*pdvPokemon2)%pdvPokemon2);
-						  System.out.println("Pokemon 1 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon2 -= degats ;
-						  
-						  System.out.println("Pokemon 2 inflige ".concat(Integer.toString(pdvPokemon1)).concat(" points de dégat"));
-						  pdvPokemon1 = 0;		
-						  System.out.println("Pokemon 2 gagne");
-						  
-					  }
-				  }
-			
-				  else
-				  {
-					  if(gagnant == false )
-					  {
-						  System.out.println("Pokemon 2 inflige ".concat(Integer.toString(pdvPokemon1)).concat(" points de dégat"));
-						  pdvPokemon1 = 0;		
-						  System.out.println("Pokemon 2 gagne");
-					  }
-					  else
-					  {
-						  degats = (int)((Math.random()*100*pdvPokemon1)%pdvPokemon1);  
-						  System.out.println("Pokemon 2 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon1 -= degats; 
-						  
-						  System.out.println("Pokemon 1 inflige ".concat(Integer.toString(pdvPokemon2)).concat(" points de dégat"));
-						  pdvPokemon2 = 0;		
-						  System.out.println("Pokemon 1 gagne");
-					  }
-				  }
-			} 
-      
-			else
-			{
-			    	
-					  if(initiative == 1)
-					  {
-						  degats = (int)((Math.random()*100*pdvPokemon2)%pdvPokemon2);
-						  System.out.println("Pokemon 1 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon2 -= degats ; 
-						  
-						  degats = (int)((Math.random()*100*pdvPokemon1)%pdvPokemon1);  
-						  System.out.println("Pokemon 2 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon1 -= degats; 
-						  
-						  
-					  }
-					  else
-					  {
-						  degats = (int)((Math.random()*100*pdvPokemon1)%pdvPokemon1);  
-						  System.out.println("Pokemon 2 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon1 -= degats; 
-						  
-						  degats = (int)((Math.random()*100*pdvPokemon2)%pdvPokemon2);
-						  System.out.println("Pokemon 1 inflige ".concat(Integer.toString(degats)).concat(" points de dégat"));
-						  pdvPokemon2 -= degats ; 
-					  }
-			    	
-	      
+		}*/
+		this.plateau.pack();
+		this.plateau.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.plateau.setPreferredSize(new Dimension (this.plateau.getWidth(), this.plateau.getHeight()));
+		JLabel back = new JLabel (new ImageIcon("./src/Images/Versus.png"));
+		back.setBounds(0, 0, this.plateau.getWidth(), this.plateau.getHeight());
+		this.plateau.add(back);
+		this.plateau.setVisible(true);
+	}
 
-			}
-			
+	private void printDresseurEquipeInJPanel (Dresseur dresseur, JPanel container)
+	{ //Affiche les pokémon d'une équipe dans un JPanel
+
+		
+		Box horizontal = Box.createHorizontalBox();
+		horizontal.setSize(56*teamSize, 200);
+		
+		for (int i = 0; i < dresseur.GetEquipe().size(); i++)
+		{ //Affiche chaque pokémon de l'équipe
+			Box pokemonContainer = Box.createVerticalBox();
+			Pokemon poke = dresseur.GetEquipe().get(i);
+			pokemonContainer.add(new JLabel (poke.getSprite()));
+			pokemonContainer.add(new JLabel("PV:" + poke.getHealthPoint()));
+			pokemonContainer.add(new JLabel("Deg: " + poke.getAttack()));
+			pokemonContainer.add(new JLabel("Def: " + poke.getDefense()));
+			pokemonContainer.add(new JLabel("Vit: " + poke.getSpeed()));
+			horizontal.add(pokemonContainer);
 		}
+		container.add(horizontal);
+	}
 	
-		public void paintComponent(Graphics g) 
-		{ 
-		
-			Settings set = new Settings();
-		
-			g.drawImage(img, 0, 0, set.getWidth(), set.getHeight() - 50, null); 
-			g.drawImage(imgpokemon1, set.getWidth()/10, set.getHeight() - (set.getHeight()/2),  set.getWidth()/3, set.getHeight()/2, null); 
-			g.drawImage(imgpokemon2, set.getWidth() - ((set.getWidth()/5)*2), set.getHeight()/4,  set.getWidth()/3, set.getHeight()/3 , null); 
-	    	repaint(); 
-		} 
+	private void setBegin ()
+	{ //Initialise les attributs nécessaires au début du combat
+		this.player = new Dresseur ("Dresseur");
+		this.player.setRandomEquipe(this.teamSize);
+		this.opponent[0] = new Dresseur ("Dresseur 1");
+ 		this.opponent[0].setRandomEquipe(this.teamSize);
+ 		this.opponent[1] = new Dresseur ("Dresseur 2");
+ 		this.opponent[1].setRandomEquipe(this.teamSize);
+ 		this.opponent[2] = new Dresseur ("Dresseur 3");
+		this.opponent[2].setRandomEquipe(this.teamSize);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		if (evt.getSource() == this.oui)
+		{ // Bloque l'équipe
+			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
+			this.oui.setEnabled(false);
+			this.non.setEnabled(false);
+		}
+		else if (evt.getSource() == this.non)
+		{ // Met à jour l'équipe du joueur
+			this.player.setRandomEquipe(this.teamSize);
 			
+			this.teamPrinter.removeAll();
+			this.teamPrinter.add(this.nameGetter);
+			this.teamPrinter.setBorder (BorderFactory.createTitledBorder("Votre équipe"));
+			
+			printDresseurEquipeInJPanel(this.player, this.teamPrinter);
+	
+			Box horizontal = Box.createHorizontalBox();
+			horizontal.add(new JLabel ("Voulez-vous garder cette équipe: "));
+			horizontal.add(oui);
+			horizontal.add(non);
+			this.teamPrinter.add(horizontal);
+			this.plateau.pack();
+			this.plateau.setVisible(true);
+		}
+		else if (evt.getSource() == this.affronter[0] || evt.getSource() == this.affronter[1] || evt.getSource() == this.affronter[2])
+		{
+			if (!this.nameGetter.equals("") && !this.nameGetter.equals(this.player.getName())) this.player.setName (this.nameGetter.getText()); //Change le nom du dresseur
+			this.plateau.dispose(); //Ferme la fenêtre courrante
+			new TourDeCombat (new MainFrame(), this.player, this.opponent[0]);
+		}
+	}
 }
