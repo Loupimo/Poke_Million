@@ -72,7 +72,7 @@ public class AffichageCombat  extends JPanel implements ActionListener{
 		public void setImgPokemon1(int id)
 		{ // Affiche l'image du pokémon du joueur (donc de dos)
 			try{
-				imgpokemon1 = ImageIO.read(new File("./PokemonData/Sprites/back/" + id + ".png"));
+				imgpokemon1 = ImageIO.read(new File("./PokemonData/Sprites/back/" + tdc.joueur.getPokemon(id).getId() + ".png"));
 				tdc.maxPvJoueur = tdc.joueur.getPokemon(id).getHealthPoint();
 				pvPlayer.setText("Défense: " + tdc.joueur.getPokemon(id).getDefense() + ", Vitesse: " + tdc.joueur.getPokemon(id).getSpeed() + ", Attaque: " + tdc.joueur.getPokemon(id).getAttack() + ", PV: " + tdc.joueur.getPokemon(id).getHealthPoint() + "/" + tdc.joueur.getPokemon(id).getHealthPoint());
 			}
@@ -85,7 +85,7 @@ public class AffichageCombat  extends JPanel implements ActionListener{
 		public void setImgPokemon2(int id)
 		{ // Affiche l'image du pokemon nnemi (donc de face)
 			try{
-				imgpokemon2 = ImageIO.read(new File("./PokemonData/Sprites/" + id + ".png"));
+				imgpokemon2 = ImageIO.read(new File("./PokemonData/Sprites/" + tdc.adversaire.getPokemon(id).getId() + ".png"));
 				tdc.maxPvEnnemi = tdc.adversaire.getPokemon(id).getHealthPoint(); 
 				pvOpponent.setText("Défense: " + tdc.adversaire.getPokemon(id).getDefense() + ", Vitesse: " + tdc.adversaire.getPokemon(id).getSpeed() + ", Attaque: " + tdc.adversaire.getPokemon(id).getAttack() + ", PV: " + tdc.adversaire.getPokemon(id).getHealthPoint() + "/" + tdc.adversaire.getPokemon(id).getHealthPoint());
 			}
